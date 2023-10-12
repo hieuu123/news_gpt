@@ -1,3 +1,8 @@
+/* 
+#FC3F00: cam
+
+*/
+
 /* ---------------------------------------- Hieu ------------------------------------------------------ */
 
 /* .header-social li {
@@ -7,6 +12,41 @@
     .header-area .header-bottom .logo img {
     width: 100%;    
     }
+}
+
+.header-info-left .fa-calendar-days, .header-info-left .fa-clock {
+    margin-right: 3px;
+}
+
+
+.sub-menu-category a {
+    padding: 0px !important;
+}
+
+.main-menu ul li:first-child a {
+    padding-left: 0px;
+}
+
+.main-menu .fa-bars {
+    margin-left: 10px;
+}
+
+/* .main-menu .submenu {
+    width: 600px !important;
+    left: -140px !important;
+    top: 40px !important;
+} */
+
+.main-menu .submenu li {
+    padding: 5px 10px;
+}
+
+.header-sticky.sticky-bar.sticky .main-menu ul > li > a:first-child {
+    padding-left: 5px;
+}
+
+.submenu .sub-menu-category a:hover {
+    color: #FC3F00;
 }
 
 /* ---------------------------------------------------------------------------------------------------- */
