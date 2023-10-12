@@ -44,7 +44,6 @@
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
-        <h1>Hello</h1>
        <div class="header-area">
             <div class="main-header">
                 <div class="header-top black-bg d-none d-md-block">
