@@ -45,15 +45,29 @@
     <header>
         <!-- Header Start -->
        <div class="header-area">
-            <div class="main-header ">
+            <div class="main-header">
                 <div class="header-top black-bg d-none d-md-block">
                    <div class="container">
                        <div class="col-xl-12">
                             <div class="row d-flex justify-content-between align-items-center">
                                 <div class="header-info-left">
                                     <ul>     
-                                        <li><img src="assets/img/icon/header_icon1.png" alt="">34ºc, Sunny </li>
-                                        <li><img src="assets/img/icon/header_icon1.png" alt="">Tuesday, 18th June, 2019</li>
+                                        <i class="fa-regular fa-calendar-days fa-beat-fade" style="color: #fc3f00;"></i>
+                                        <li>
+                                            <?php
+                                            date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                            $current_date = date("D d - m - Y");
+                                            echo $current_date;
+                                            ?>
+                                        </li>
+
+                                        <i class="fa-regular fa-clock fa-beat-fade" style="color: #fc3f00;"></i>
+                                        <li>
+                                            <?php
+                                            $current_time = date("h : i A");
+                                            echo $current_time;
+                                            ?>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="header-info-right">
@@ -68,7 +82,6 @@
                        </div>
                    </div>
                 </div>
-
 
                 <!-- <div class="header-mid d-none d-md-block">
                    <div class="container">
@@ -93,7 +106,7 @@
                         <div class="row d-flex align-items-center">
                             <div class="col-xl-2 col-lg-2 col-md-2">
                                 <div class="logo">
-                                    <a href="index.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                    <a href="index.php"><img src="assets/img/logo/hqn_logo/logo_slogan.jpg" alt="" width="100%"></a>
                                 </div>
                             </div>
                             <div class="col-xl-8 col-lg-8 col-md-10 header-flex">
@@ -105,9 +118,9 @@
                                 <div class="main-menu d-none d-md-block">
                                     <nav>                  
                                         <ul id="navigation">    
-                                            <li><a href="index.php">Home</a></li>
-                                            <li><a href="categori.html">Category</a></li>
-                                            <li><a href="about.html">About</a></li>
+                                            <!-- <li><a href="index.php">Trang Chủ</a></li> -->
+                                            <!-- <li><a href="categori.html">Category</a></li>
+                                            <li><a href="about.html">Giới Thiệu</a></li>
                                             <li><a href="latest_news.html">Latest News</a></li>
                                             <li><a href="contact.html">Contact</a></li>
                                             <li><a href="#">Pages</a>
@@ -116,6 +129,50 @@
                                                     <li><a href="blog.html">Blog</a></li>
                                                     <li><a href="single-blog.html">Blog Details</a></li>
                                                     <li><a href="details.html">Categori Details</a></li>
+                                                </ul>
+                                            </li> -->
+                                            <li><a href="#">Thời Sự</a></li>
+                                            <li><a href="#">Thế Giới</a></li>
+                                            <li><a href="#">Kinh Doanh</a></li>
+                                            <li><a href="#">Khoa Học</a></li>
+                                            <li><a href="#">Giải Trí</a></li>
+                                            <li><a href="#">Thể Thao</a></li>
+                                            <li><a href="#">Giáo Dục</a></li>
+                                            <li>
+                                                <i class="fa-solid fa-bars" style="color: #fc3f00;"></i>
+                                                <ul class="submenu">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <span class="col sub-menu-category"><a href="#">Thời Sự</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Thế Giới</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Kinh Doanh</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Khoa Học</a></span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span class="col sub-menu-category"><a href="#">Giải Trí</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Thể Thao</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Giáo Dục</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Pháp Luật</a></span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span class="col sub-menu-category"><a href="#">Đời Sống</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Sức Khỏe</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Du Lịch</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Số Hóa</a></span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span class="col sub-menu-category"><a href="#">Xe</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Ý Kiến</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Tâm Sự</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Cười</a></span>
+                                                        </div>
+                                                        <div class="row">
+                                                            <span class="col sub-menu-category"><a href="#">Tin mới nhất</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Tin nổi bật</a></span>
+                                                            <span class="col sub-menu-category"><a href="#">Tin xem nhiều</a></span>
+                                                            <span class="col sub-menu-category"><a href="#"></a></span>
+                                                        </div>
+                                                    </div>
                                                 </ul>
                                             </li>
                                         </ul>
