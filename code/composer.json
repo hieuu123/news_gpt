@@ -1,0 +1,9 @@
+"repositories": [
+    {
+        "type": "composer",
+        "url": "https://jitpack.io"
+    }
+]
+"require": {
+    "ndanhkhoi/google-bard-client": "v2023.08.11"
+}
