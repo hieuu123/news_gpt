@@ -1,0 +1,76 @@
+.icon-hover:hover {
+  border-color: #dc3545 !important;
+  background-color: white !important;
+}
+
+.icon-hover:hover i {
+  color: #dc3545 !important;
+}
+
+#nut1
+{
+  margin-left: 5px;
+}
+
+#head{
+  margin-top: 15px;
+}
+.navbar-brand
+{
+    size: 500px;
+}
+#search1
+{
+    width: 350px;
+}
+.carousel-item 
+{
+    height: 400px;
+}
+#banner
+{
+    text-decoration: solid;
+    font-size: 70px;
+    margin-top: 100px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+#des
+{
+    font-size: 15px;
+    text-decoration: none;
+    margin-bottom: 100px;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: justify;
+}
+#para {
+    position: absolute;
+    z-index: 1;
+    color: white;
+}
+#ht1
+{
+    margin-top: 20px;
+}
+
+#carouselExample {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#title
+{
+    font-size: 45px;
+}
+#title1
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.card-group
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
