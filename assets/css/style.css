@@ -5606,7 +5606,7 @@ del {
   padding: 10px 0 10px 0px;
 }
 .form-select .nice-select .list .option {
-  font-weight: 300;
+  font-weight: 400; /*font-weight: 300;*/
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
