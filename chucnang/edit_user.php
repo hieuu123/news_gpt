@@ -166,9 +166,6 @@ include 'header.php';
           ORDER BY user_id ASC;";
             $result = $conn->query($query);
             $rows = $result->num_rows;
-            $role_get = $_POST['roles'];
-            $username_get = $_POST['username'];
-            $password_get = $_POST['password'];
             if (
               isset($_POST['roles']) &&
               isset($_POST['username']) &&
@@ -200,6 +197,7 @@ include 'header.php';
                   $check = "invalid";
                 }
               }
+              echo $check;
               if ($check == "user" || $check == "admin") {
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
@@ -240,6 +238,11 @@ include 'header.php';
             ?>
           </form>
           <?php
+                      if (
+                        isset($_POST['roles']) &&
+                        isset($_POST['username']) &&
+                        isset($_POST['password'])
+                      ) {
           if ($check == "admin") {
             echo '
             <button onclick="openPopup()">Open Popup</button>
@@ -276,11 +279,14 @@ include 'header.php';
                         </tr>
                         ';
                   }
-                  echo '
-                    </table>
-                    <button type="submit">Submit</button>
-                  </div>
+                  echo '</table>';
+                  if ($check == "user" || $check == "admin") {
+                    echo '<button type="submit">Submit</button>';
+                  }  
+                  echo'</div>
                 </div>';
+          }}
+          else {
           }
                   ?>
 
