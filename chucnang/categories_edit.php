@@ -71,6 +71,10 @@
     flex-direction: column;
     align-items: center;
   }
+
+  label {
+    margin-top: 15px;
+  }
 </style>
 <style>
   body {
@@ -151,24 +155,34 @@ include 'header.php';
 ?>
 
 <body>
-  <h1 style="text-align: center;">My profile</h1>
+  <script>
+    var check_1 = 0;
+  </script>
+  <form action="add_categories.php" style="display: none;" method="post">
+    <input type="text" name="username" id="user">
+    <input type="text" name="password" id="pass">
+    <input type="text" name="roles" id="r">
+    <input type="text" name="check" id="c">
+    <input type="submit" id="dangnhap">
+  </form>
+  <h1 style="text-align: center;">Add categories</h1>
   <div class="row d-flex justify-content-center">
     <div class="col-md-10">
       <div class="card" id="forn">
         <div class="row">
-          <form action="edit_user_process.php" method="post" id="post">
+          <form action="add_categories_process.php" method="post" id="post">
             <?php // sqltest.php
             /////
             $conn = new mysqli("localhost", "root", "", "cmsweb");
             if ($conn->connect_error) die($conn->connect_error);
+            if (isset($_POST['check'])) {
+              echo "<script>check_1 = 1;</script> ";
+            }
             $query = "SELECT * FROM users
           JOIN roles ON users.role_id = roles.role_id
           ORDER BY user_id ASC;";
             $result = $conn->query($query);
             $rows = $result->num_rows;
-            $role_get = $_POST['roles'];
-            $username_get = $_POST['username'];
-            $password_get = $_POST['password'];
             if (
               isset($_POST['roles']) &&
               isset($_POST['username']) &&
@@ -203,100 +217,60 @@ include 'header.php';
               if ($check == "user" || $check == "admin") {
                 $query = "SELECT * FROM categories
                           JOIN groupcategories ON categories.groupcategory_id = groupcategories.groupcategory_id
-                          ORDER BY user_id ASC;";
+                          ORDER BY category_id ASC;";
                 $result = $conn->query($query);
                 $rows = $result->num_rows;
+                $category_id = 1;
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
                   $row = $result->fetch_assoc();
-                  $username = $row['username'];
-                  $password = $row['password'];
-                  $email = $row['email'];
-                  $role_name = $row['role_name'];
-                  if ($username_get === $username && $password_get === $password && $role_name === $role_get) {
-                    echo '
-                    <label for="user_id">ID</label><br><input type="text" name="user_id" placeholder="ID do not edit" value = "' . $user_id . '"> <br>
-                    <label for="username">Username</label><br><input type="text" name="username" placeholder="Username" value = "' . $username . '"> <br>
-                    <label for="email">Email</label><br><input type="text" name="email" placeholder="Email" value = "' . $email . '"> <br>
-                    <label for="password">Password</label><br><input type="password" name="password" placeholder="Price e.g 01.00 $.." value = "' . $password . '"> <br>';
-                  }
-                }}
-                else{
-                  echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
-                }
-                if ($check == "admin") {
-                  $query = "SELECT * FROM roles;";
-                  $result = $conn->query($query);
-                  $rows = $result->num_rows;
-                  echo '<label for="roles">Roles</label><br>
-                  <select name="roles">';
-                  for ($j = 0; $j < $rows; ++$j) {
-                    $variable = $result->data_seek($j);
-                    $row = $result->fetch_assoc();
-                    $a = $row['role_id'];
-                    $b = $row['role_name'];
-                    echo '<option value="' . $a . '">' . $b . '</option>';
+                  if ( $category_id < $row['category_id']) {
+                    $category_id = $row['category_id'];
                   }
                 }
-                echo '<br><input type="submit" value="Sửa user">';
-                echo '</select><br></form>';
+                $category_id = $category_id + 1;
+                echo '
+                    <input type="text" name="category_id" value = "'.$category_id.'" >
+                    <label for="category_name">Category Name</label><br><input type="text" name="category_name"> <br>
+                    <label for="description">Description</label><br><input type="text" name="description" > <br>';
+                $query = "SELECT * FROM groupcategories;";
+                $result = $conn->query($query);
+                $rows = $result->num_rows;
+                echo '<label for="groupcategories">Groupcategories</label><br>
+                    <select name="groupcategory_id">';
+                for ($j = 0; $j < $rows; ++$j) {
+                  $variable = $result->data_seek($j);
+                  $row = $result->fetch_assoc();
+                  $a = $row['groupcategory_id'];
+                  $b = $row['groupcategory_name'];
+                  echo '<option value="' . $a . '">' . $b . '</option>';
+                }
+              } else {
+                echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
               }
+              echo '</select><br>';
+              echo '<input type="submit" value="Add category">';
+              echo '<br></form>';
+            }
             ?>
           </form>
-
-          <body>
-            <button onclick="openPopup()">Open Popup</button>
-
-            <div class="overlay" id="overlay">
-              <div class="popup">
-                <span class="close-button" onclick="closePopup()">&times;</span>
-                <table>
-                  <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                  </tr>
-                  <?php
-                  for ($j = 0; $j < $rows; ++$j) {
-                    $query = "SELECT * FROM users
-          JOIN roles ON users.role_id = roles.role_id
-          ORDER BY user_id ASC;";
-                    $result = $conn->query($query);
-                    $rows = $result->num_rows;
-                    $variable = $result->data_seek($j);
-                    $row = $result->fetch_assoc();
-                    $user_id = $row['user_id'];
-                    $username = $row['username'];
-                    $password = $row['password'];
-                    $email = $row['email'];
-                    $role_name = $row['role_name'];
-                    echo '
-                        <tr>
-                            <td><input type="text" name="user_id" value="' . $user_id . '" readonly></td>
-                            <td><input type="text" name="username" value="' . $username . '"></td>
-                            <td><input type="text" name="email" value="' . $email . '"></td>
-                            <td><input type="password" name="password" value="' . $password . '"></td>
-                        </tr>';
-                  }
-                  ?>
-                </table>
-
-                <button type="submit">Submit</button>
-              </div>
-            </div>
-            <script>
-              function openPopup() {
-                document.getElementById("overlay").classList.add("visible");
-              }
-              function closePopup() {
-                document.getElementById("overlay").classList.remove("visible");
-              }
-            </script>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    var username = document.getElementById('user');
+    var password = document.getElementById('pass');
+    var roles = document.getElementById('r');
+    document.getElementById('c').value = check_1;
+    username.value = localStorage.getItem('username');
+    password.value = localStorage.getItem('password');
+    roles.value = localStorage.getItem('role');
+    if (check_1 == 0) {
+      var check_button = document.getElementById('dangnhap');
+      check_button.click();
+    }
+  </script>
   <?php
   include 'footer.php';
   ?>
