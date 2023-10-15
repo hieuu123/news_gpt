@@ -104,7 +104,6 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width: 500px;
     max-width: 90%;
     overflow-y: scroll;
   }
@@ -224,13 +223,13 @@ include 'header.php';
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
                   $row = $result->fetch_assoc();
-                  if ( $category_id < $row['category_id']) {
+                  if ($category_id < $row['category_id']) {
                     $category_id = $row['category_id'];
                   }
                 }
                 $category_id = $category_id + 1;
                 echo '
-                    <input type="text" name="category_id" value = "'.$category_id.'" >
+                    <input type="text" name="category_id" value = "' . $category_id . '" >
                     <label for="category_name">Category Name</label><br><input type="text" name="category_name"> <br>
                     <label for="description">Description</label><br><input type="text" name="description" > <br>';
                 $query = "SELECT * FROM groupcategories;";
@@ -254,6 +253,84 @@ include 'header.php';
             }
             ?>
           </form>
+          <?php
+          if (
+            isset($_POST['roles']) &&
+            isset($_POST['username']) &&
+            isset($_POST['password'])
+          ) {
+            if ($check == "admin") {
+              echo '
+            <input type="submit" onclick="openPopup()" value="Edit Categories">
+
+            <div class="overlay" id="overlay">
+              <div class="popup">
+                <span class="close-button" onclick="closePopup()">&times;</span>
+                <table>
+                  <tr>
+                    <th>Categories ID</th>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                    <th>Group Categories</th>
+                  </tr>';
+              $query = "SELECT * FROM categories
+                  JOIN groupcategories ON categories.groupcategory_id = groupcategories.groupcategory_id
+                  ORDER BY category_id ASC;";
+              $result = $conn->query($query);
+              $rows = $result->num_rows;
+
+              $queryGroup = "SELECT * FROM groupcategories;";
+              $resultGroup = $conn->query($queryGroup);
+              $rowsGroup = $resultGroup->num_rows;
+
+              for ($j = 0; $j < $rows; ++$j) {
+                $variable = $result->data_seek($j);
+                $row = $result->fetch_assoc();
+                $category_id = $row['category_id'];
+                $category_name = $row['category_name'];
+                $description = $row['description'];
+                $groupcategory_id = $row['groupcategory_id'];
+                echo '"<form action="edit_categories_process.php" method="post" id="post">"';
+                echo '
+                <tr>
+                    <td><input type="text" name="category_id" value="' . $category_id . '" readonly></td>
+                    <td><input type="text" name="category_name" value="' . $category_name . '"></td>
+                    <td><input type="text" name="description" value="' . $description . '"></td>
+                    <td>
+                        <select name="groupcategory_id">';
+
+                for ($i = 0; $i < $rowsGroup; ++$i) {
+                  $variable = $resultGroup->data_seek($i);
+                  $rowGroup = $resultGroup->fetch_assoc();
+                  $a = $rowGroup['groupcategory_id'];
+                  $b = $rowGroup['groupcategory_name'];
+
+                  if ($groupcategory_id == $a) {
+                    echo '<option value="' . $a . '" selected>' . $b . '</option>';
+                  } else {
+                    echo '<option value="' . $a . '">' . $b . '</option>';
+                  }
+                }
+
+                echo '</select></td><td><input type="submit" value="Sửa"></td></tr></form>';
+              }
+              echo '</table>';
+              echo '</div>
+                </div>';
+            }
+          } else {
+          }
+          ?>
+
+          <script>
+            function openPopup() {
+              document.getElementById("overlay").classList.add("visible");
+            }
+
+            function closePopup() {
+              document.getElementById("overlay").classList.remove("visible");
+            }
+          </script>
         </div>
       </div>
     </div>
