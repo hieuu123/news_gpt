@@ -183,7 +183,7 @@
             <a class="nav-link active" aria-current="page" href="listcontent.php">Product list</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="add_categories.php">Add category</a>
+            <a class="nav-link active" aria-current="page" href="add_edit_categories.php">Add category</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Menu item</a>

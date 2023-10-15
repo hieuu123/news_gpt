@@ -157,7 +157,7 @@ include 'header.php';
   <script>
     var check_1 = 0;
   </script>
-  <form action="add_categories.php" style="display: none;" method="post">
+  <form action="add_edit_categories.php" style="display: none;" method="post">
     <input type="text" name="username" id="user">
     <input type="text" name="password" id="pass">
     <input type="text" name="roles" id="r">
