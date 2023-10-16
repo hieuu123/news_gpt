@@ -229,7 +229,7 @@ include 'header.php';
                 }
                 $category_id = $category_id + 1;
                 echo '
-                    <input type="text" name="category_id" value = "' . $category_id . '" >
+                    <input type="text" name="category_id" value = "' . $category_id . '" style="display: none;" >
                     <label for="category_name">Category Name</label><br><input type="text" name="category_name"> <br>
                     <label for="description">Description</label><br><input type="text" name="description" > <br>';
                 $query = "SELECT * FROM groupcategories;";
@@ -262,7 +262,6 @@ include 'header.php';
             if ($check == "admin") {
               echo '
             <input type="submit" onclick="openPopup()" value="Edit Categories">
-
             <div class="overlay" id="overlay">
               <div class="popup">
                 <span class="close-button" onclick="closePopup()">&times;</span>
@@ -282,7 +281,6 @@ include 'header.php';
               $queryGroup = "SELECT * FROM groupcategories;";
               $resultGroup = $conn->query($queryGroup);
               $rowsGroup = $resultGroup->num_rows;
-
               for ($j = 0; $j < $rows; ++$j) {
                 $variable = $result->data_seek($j);
                 $row = $result->fetch_assoc();
@@ -290,7 +288,7 @@ include 'header.php';
                 $category_name = $row['category_name'];
                 $description = $row['description'];
                 $groupcategory_id = $row['groupcategory_id'];
-                echo '"<form action="edit_categories_process.php" method="post" id="post">"';
+                echo '<form action="edit_categories_process.php" method="post" id="post">';
                 echo '
                 <tr>
                     <td><input type="text" name="category_id" value="' . $category_id . '" readonly></td>
@@ -312,13 +310,14 @@ include 'header.php';
                   }
                 }
 
-                echo '</select></td><td><input type="submit" value="Sửa"></td></tr></form>';
+                echo '</select></td><td><input type="submit" value="Sửa"></td>
+                <td><a id="update" href="add_delete_process.php?category_id=' . $category_id . '&"><button type="button" class="btn btn-primary">Xóa</button></a></td>
+                </tr></form>';
               }
               echo '</table>';
               echo '</div>
                 </div>';
             }
-          } else {
           }
           ?>
 
