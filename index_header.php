@@ -39,6 +39,88 @@
         color: black;
         border: black;
     }
+
+    /* CSS để tùy chỉnh giao diện modal */
+    .modal-header {
+        background-color: #f8f9fa;
+        border-bottom: none;
+    }
+
+    .modal-title {
+        color: #343a40;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .modal-body {
+        padding: 30px;
+    }
+
+    /* CSS để tùy chỉnh giao diện form đăng ký */
+    .form-label {
+        color: #343a40;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 20px;
+        padding: 12px;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        border-radius: 20px;
+        padding: 10px 30px;
+        font-weight: bold;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 10% auto;
+        padding: 20px;
+        width: 30%;
+        border: 1px solid #888;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 85%;
+        top: 100%;
+        background-color: black;
+    }
+
+    .dropdown-menu.active {
+        display: block;
+        position: absolute;
+    }
 </style>
 <header>
     <!-- Header Start -->
@@ -70,8 +152,13 @@
                             </div>
                             <div class="header-info-right">
                                 <ul class="header-social">
-                                    <li><a id="loginBtn" href="#">Đăng Nhập</a></li>
-
+                                    <li>
+                                        <a id="loginBtn">Đăng Nhập</a>
+                                        <ul class="dropdown-menu">
+                                            <li id="account" class="col"><a href="#">Chỉnh sửa thông tin</a></li>
+                                            <li id="logout" class="col" onclick="logout()"><a href="#">Đăng xuất</a></li>
+                                        </ul>
+                                    </li>
                                     <div id="modal" class="modal1">
                                         <div class="modal-content1">
                                             <span class="close">&times;</span>
@@ -82,6 +169,30 @@
                                                 <label for="password">Password:</label>
                                                 <input type="password" id="password" required><br><br>
                                                 <button type="submit" class="btn btn-outline-dark">Login</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <li><a id="nut1" href="#" onclick="openModal()">Đăng Ký</a></li>
+                                    <!-- Modal -->
+                                    <!-- Modal -->
+                                    <div id="myModal" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" onclick="closeModal()">&times;</span>
+                                            <h2>Đăng ký</h2>
+                                            <form id="formsignup">
+                                                <label for="username">Tên người dùng:</label><br>
+                                                <input type="text" id="username_signup" name="username"><br><br>
+
+                                                <label for="email">Email:</label><br>
+                                                <input type="email" id="email_signup" name="email"><br><br>
+
+                                                <label for="password">Mật khẩu:</label><br>
+                                                <input type="password" id="password_signup" name="password"><br><br>
+
+                                                <label for="password_signup1">Nhập lại mật khẩu:</label><br>
+                                                <input type="password" id="password_signup_verify" name="repeat-password"><br><br>
+
+                                                <input type="submit" value="Đăng ký">
                                             </form>
                                         </div>
                                     </div>
@@ -215,16 +326,15 @@
     <script>
         dangnhap_auto();
         dieukien();
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            document.getElementById('modal').style.display = 'block';
+        });
         var role = localStorage.getItem('role');
         document.getElementById('loginBtn').value = role;
         console.log(role);
         if (role !== null && role !== undefined) {
             loginBtn.textContent = role;
         }
-        document.getElementById('loginBtn').addEventListener('click', function() {
-            document.getElementById('modal').style.display = 'block';
-        });
-
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('modal').style.display = 'none';
         });
@@ -234,7 +344,25 @@
                 document.getElementById('modal').style.display = 'none';
             }
         });
+        document.getElementById("nut1").addEventListener("click", function() {
+            var modal = new bootstrap.Modal(document.getElementById("exampleModal"));
+            modal.show();
+        });
+        var modal = document.getElementById("myModal");
 
+        function openModal() {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        };
         // Lấy tham chiếu đến form và các trường dữ liệu
         const form = document.getElementById('login');
         const usernameInput = document.getElementById('username');
@@ -242,7 +370,7 @@
 
         // Gắn sự kiện submit cho form
         const xhr = new XMLHttpRequest();
-        const url = 'login_process.php';
+        const url = 'chucnang/login_process.php';
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Ngăn chặn hành vi submit mặc định của form
             // Lấy giá trị từ các trường dữ liệu
@@ -277,7 +405,6 @@
             // Lấy giá trị của 'role' từ localStorage
         });
         ////
-
         const form_signup = document.getElementById('formsignup');
         let username_signup = document.getElementById('username_signup');
         let email_signup = document.getElementById('email_signup');
@@ -285,7 +412,7 @@
         let password_signup1 = document.getElementById('password_signup_verify');
         // Gắn sự kiện submit cho form
         const xhr_2 = new XMLHttpRequest();
-        const url_2 = 'register_process.php';
+        const url_2 = 'chucnang/register_process.php';
         form_signup.addEventListener('submit', function(event) {
             event.preventDefault(); // Ngăn chặn hành vi submit mặc định của form
             // Lấy giá trị từ các trường dữ liệu
@@ -327,6 +454,14 @@
             password_signup.value = '';
             password_signup1.value = '';
             // Lấy giá trị của 'role' từ localStorage
+        });
+        const loginBtn1 = document.getElementById('loginBtn');
+        const dropdownMenu = document.querySelector('.dropdown-menu');
+
+        loginBtn.addEventListener('mouseover', function() {
+            if (role !== null && role !== 'Đăng nhập') {
+                dropdownMenu.classList.toggle('active');
+            }
         });
         ////////// account
         // Ẩn phần tử 'account' ban đầu
@@ -406,6 +541,15 @@
 
             const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
             xhr.send(data);
+        }
+        function logout() {
+            localStorage.setItem('username', '');
+            localStorage.setItem('password', '');
+            localStorage.setItem('role', 'Đăng nhập');
+            location.reload();
+        }
+        if (role !== null && role !== 'Đăng nhập') {
+            document.getElementById('nut1').style.display = 'none';
         }
     </script>
 </header>

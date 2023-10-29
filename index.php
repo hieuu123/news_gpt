@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/hqn.css">
-
+    
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 </head>
@@ -92,7 +92,6 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
-
 </body>
 
 </html>
