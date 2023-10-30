@@ -199,7 +199,30 @@
             }
         
             echo $result;
-        }        
+        }
+        elseif (strpos($url, "tienphong.vn") !== false) {
+                        // $result = ""; // Tạo một biến để lưu kết quả
+        
+            // Lấy tiêu đề
+            $titleNodes = $xpath->query('//h1[@class="article__title cms-title"]');
+            if ($titleNodes->length > 0) {
+                $result .= "<h1>" . $titleNodes->item(0)->nodeValue . "</h1><br>";
+            }
+        
+            // Lấy mô tả
+            $summaryNodes = $xpath->query('//div[@class="article__sapo cms-desc"]');
+            if ($summaryNodes->length > 0) {
+                $result .= $summaryNodes->item(0)->nodeValue . "<br>";
+            }
+        
+            // Lấy nội dung của tất cả các thẻ <p> con trực tiếp của div với class "article__body cms-body"
+            $pNodes = $xpath->query('//div[@class="article__body cms-body"]/p');
+            foreach ($pNodes as $pNode) {
+                $result .= $pNode->nodeValue . "<br>";
+            }
+        
+            echo $result;
+        }    
          else {
             echo "";
         }
