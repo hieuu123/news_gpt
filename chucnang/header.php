@@ -1,5 +1,4 @@
 <style>
-  
   .modal1 {
     display: none;
     position: fixed;
@@ -34,6 +33,7 @@
     text-decoration: none;
     cursor: pointer;
   }
+
   #nhan {
     text-decoration: none;
     color: black;
@@ -183,7 +183,7 @@
             <a class="nav-link active" aria-current="page" href="listcontent.php">Product list</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Projects</a>
+            <a class="nav-link active" aria-current="page" href="add_edit_categories.php">Add category</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Menu item</a>
@@ -204,6 +204,7 @@
     </div>
   </nav>
   <script>
+    dangnhap_auto();
     dieukien();
     var role = localStorage.getItem('role');
     document.getElementById('loginBtn').value = role;
@@ -324,7 +325,7 @@
       // Lấy giá trị từ localStorage
       var role = localStorage.getItem('role');
 
-      if (role == "Administrator" || role === 'Reader'  ) {
+      if (role === 'Administrator' || role === 'Reader' || role === 'Editor' || role === 'Author' || role === 'Contributor') {
         // Hiển thị phần tử 'account' nếu vai trò là "Admin"
         document.getElementById('account').style.display = 'block';
       } else {
@@ -338,7 +339,7 @@
       // Lấy giá trị từ localStorage
       var role3 = localStorage.getItem('role');
 
-      if (role3 === 'Administrator' || role3 === 'Reader'  ) {
+      if (role3 === 'Administrator' || role3 === 'Reader' || role3 === 'Editor' || role3 === 'Author' || role3 === 'Contributor') {
         var username3 = localStorage.getItem('username');
         var password3 = localStorage.getItem('password');
 
@@ -371,6 +372,32 @@
         form.submit();
       }
     }
+  let check_dangnhap = 0;
+  function dangnhap_auto() {
+  const xhr = new XMLHttpRequest();
+  var username = localStorage.getItem('username');
+  var password = localStorage.getItem('password');
+  const url = 'login_process.php';
+  xhr.open('POST', url, true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      // In kết quả trả về từ file PHP
+      if (xhr.responseText.trim() !== "login : false") {
+        let role = xhr.responseText;
+        console.log(xhr.responseText);
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+        localStorage.setItem('role', role);
+      } else {
+      }
+    }
+  };
+
+  const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password);
+  xhr.send(data);
+}
   </script>
   </div>
 </header>

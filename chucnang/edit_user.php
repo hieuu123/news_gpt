@@ -166,9 +166,6 @@ include 'header.php';
           ORDER BY user_id ASC;";
             $result = $conn->query($query);
             $rows = $result->num_rows;
-            $role_get = $_POST['roles'];
-            $username_get = $_POST['username'];
-            $password_get = $_POST['password'];
             if (
               isset($_POST['roles']) &&
               isset($_POST['username']) &&
@@ -200,15 +197,12 @@ include 'header.php';
                   $check = "invalid";
                 }
               }
+              echo $check;
               if ($check == "user" || $check == "admin") {
-                $query = "SELECT * FROM categories
-                          JOIN groupcategories ON categories.groupcategory_id = groupcategories.groupcategory_id
-                          ORDER BY user_id ASC;";
-                $result = $conn->query($query);
-                $rows = $result->num_rows;
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
                   $row = $result->fetch_assoc();
+                  $user_id = $row['user_id'];
                   $username = $row['username'];
                   $password = $row['password'];
                   $email = $row['email'];
@@ -237,14 +231,20 @@ include 'header.php';
                     $b = $row['role_name'];
                     echo '<option value="' . $a . '">' . $b . '</option>';
                   }
+                  echo '</select><br>';
                 }
-                echo '<br><input type="submit" value="Sửa user">';
-                echo '</select><br></form>';
+                echo '<input type="submit" value="Sửa user"></form>';
               }
             ?>
           </form>
-
-          <body>
+          <?php
+                      if (
+                        isset($_POST['roles']) &&
+                        isset($_POST['username']) &&
+                        isset($_POST['password'])
+                      ) {
+          if ($check == "admin") {
+            echo '
             <button onclick="openPopup()">Open Popup</button>
 
             <div class="overlay" id="overlay">
@@ -256,8 +256,7 @@ include 'header.php';
                     <th>Username</th>
                     <th>Email</th>
                     <th>Password</th>
-                  </tr>
-                  <?php
+                  </tr>';
                   for ($j = 0; $j < $rows; ++$j) {
                     $query = "SELECT * FROM users
           JOIN roles ON users.role_id = roles.role_id
@@ -277,14 +276,20 @@ include 'header.php';
                             <td><input type="text" name="username" value="' . $username . '"></td>
                             <td><input type="text" name="email" value="' . $email . '"></td>
                             <td><input type="password" name="password" value="' . $password . '"></td>
-                        </tr>';
+                        </tr>
+                        ';
                   }
+                  echo '</table>';
+                  if ($check == "user" || $check == "admin") {
+                    echo '<button type="submit">Submit</button>';
+                  }  
+                  echo'</div>
+                </div>';
+          }}
+          else {
+          }
                   ?>
-                </table>
 
-                <button type="submit">Submit</button>
-              </div>
-            </div>
             <script>
               function openPopup() {
                 document.getElementById("overlay").classList.add("visible");

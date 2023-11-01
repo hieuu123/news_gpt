@@ -26,7 +26,6 @@
             $result = $conn->query($query);
             if (!$result) echo "<h5>UPDATE failed: $query<br><h5>" .
               $conn->error . "<br><br>";
-            echo '<h1 style="text-align: center;">Update record successful.</h1>';
             
             ob_flush(); // Xóa bộ nhớ đệm
             flush(); // Đẩy dữ liệu đến trình duyệt ngay lập tức

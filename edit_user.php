@@ -4,9 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css" />
   <title>Trang E-commerce</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/ticker-style.css">
+    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <link rel="stylesheet" href="assets/css/slicknav.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <link rel="stylesheet" href="assets/css/nice-select.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/hqn.css">
+    
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 
 </head>
 <style>
@@ -145,18 +167,34 @@
     padding: 5px;
     box-sizing: border-box;
   }
+  #form__edit{
+    margin-bottom: 50px;
+    background-color: #fff;
+  }
+  .openmodal_{
+    background-color: #007bff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    text-align: left;
+    margin-top: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
+  }
 </style>
 <?php
-include 'header.php';
+    include "index_header.php";
 ?>
 
+
 <body>
-  <h1 style="text-align: center;">My profile</h1>
-  <div class="row d-flex justify-content-center">
+  <h1 style="text-align: center; margin-top: 25px;">My profile</h1>
+  <div class="row d-flex justify-content-center" id="form__edit">
     <div class="col-md-10">
       <div class="card" id="forn">
         <div class="row">
-          <form action="edit_user_process.php" method="post" id="post">
+          <form action="chucnang/edit_user_process.php" method="post" id="post">
             <?php // sqltest.php
             /////
             $conn = new mysqli("localhost", "root", "", "cmsweb");
@@ -166,9 +204,6 @@ include 'header.php';
           ORDER BY user_id ASC;";
             $result = $conn->query($query);
             $rows = $result->num_rows;
-            $role_get = $_POST['roles'];
-            $username_get = $_POST['username'];
-            $password_get = $_POST['password'];
             if (
               isset($_POST['roles']) &&
               isset($_POST['username']) &&
@@ -197,9 +232,10 @@ include 'header.php';
                   $check = "user";
                   $conf = "1";
                 } else if ($conf === "" && $check === "") {
-                  $check = "invalid";
+                  $check = "invalid <br>";
                 }
               }
+              echo $check;
               if ($check == "user" || $check == "admin") {
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
@@ -240,10 +276,16 @@ include 'header.php';
             ?>
           </form>
           <?php
+                      if (
+                        isset($_POST['roles']) &&
+                        isset($_POST['username']) &&
+                        isset($_POST['password'])
+                      ) {
           if ($check == "admin") {
-            echo '
-            <button onclick="openPopup()">Open Popup</button>
-
+            echo '</div></div>
+            <br>
+            <h3>Sửa thông tin các tài khoản trong hệ thống</h3>
+            <button class="openmodal_" onclick="openPopup()">Open Popup</button>
             <div class="overlay" id="overlay">
               <div class="popup">
                 <span class="close-button" onclick="closePopup()">&times;</span>
@@ -276,11 +318,14 @@ include 'header.php';
                         </tr>
                         ';
                   }
-                  echo '
-                    </table>
-                    <button type="submit">Submit</button>
-                  </div>
+                  echo '</table>';
+                  if ($check == "user" || $check == "admin") {
+                    echo '<button type="submit">Submit</button>';
+                  }  
+                  echo'</div>
                 </div>';
+          }}
+          else {
           }
                   ?>
 
@@ -296,9 +341,47 @@ include 'header.php';
       </div>
     </div>
   </div>
-  <?php
-  include 'footer.php';
-  ?>
+    <?php
+    include 'index_footer.php';
+    ?>
+        <!-- All JS Custom Plugins Link Here here -->
+    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./assets/js/popper.min.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./assets/js/owl.carousel.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <!-- Date Picker -->
+    <script src="./assets/js/gijgo.min.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./assets/js/wow.min.js"></script>
+    <script src="./assets/js/animated.headline.js"></script>
+    <script src="./assets/js/jquery.magnific-popup.js"></script>
+
+    <!-- Breaking New Pluging -->
+    <script src="./assets/js/jquery.ticker.js"></script>
+    <script src="./assets/js/site.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./assets/js/jquery.nice-select.min.js"></script>
+    <script src="./assets/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./assets/js/contact.js"></script>
+    <script src="./assets/js/jquery.form.js"></script>
+    <script src="./assets/js/jquery.validate.min.js"></script>
+    <script src="./assets/js/mail-script.js"></script>
+    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./assets/js/plugins.js"></script>
+    <script src="./assets/js/main.js"></script>
 </body>
 
 </html>
