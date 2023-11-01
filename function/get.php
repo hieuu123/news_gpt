@@ -1,5 +1,5 @@
 <?php
-$fileUrl = 'https://baochinhphu.vn/chuyen-tham-cua-tong-thong-joe-biden-se-dua-quan-he-viet-nam-hoa-ky-phat-trien-len-mot-tam-cao-moi-102230909161139046.htm';
+$fileUrl = 'https://xaydungchinhsach.chinhphu.vn/chuyen-tham-viet-nam-cua-tong-thong-hoa-ky-joe-biden-se-lam-sau-sac-them-tinh-huu-nghi-giua-hai-nuoc-119230908141751289.htm';
 $destination = 'chucnang/file.php';
 
 // Initialize cURL
