@@ -10,7 +10,10 @@
             display: none;
             margin: 0 auto;
         }
-
+        [id^="input-sum-form"]
+        {
+            border: none;
+        }
         .loading-spinner {
             display: none;
             width: 40px;
@@ -56,8 +59,8 @@
 
             echo "<br><p>Kết quả tìm kiếm cho: $query</p>";
 
-            // $googleApiKey = 'AIzaSyCDXqgZigJoUY7u7Bq56Y2RqvcB-eDV8XM'; // 1st project
-            $googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
+            $googleApiKey = 'AIzaSyCDXqgZigJoUY7u7Bq56Y2RqvcB-eDV8XM'; // 1st project
+            // $googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
             $customSearchEngineId = '373366471dba54c47';
 
             // Mã hoá từ khóa trước khi sử dụng trong URL
@@ -71,13 +74,11 @@
             echo '<table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-            <th scope="col">Handle</th>
-            <th scope="col">Handle</th>
-            <th scope="col">Handle</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Trang nguồn</th>
+            <th scope="col">Status</th>
+            <th scope="col">Nội dung</th>
+            <th scope="col">Action</th>
+            <th scope="col">ND tóm tắt</th>
           </tr>
         </thead>
         <tbody>';
@@ -92,10 +93,10 @@
                     foreach ($firstThreeResults as $result) {
                         echo '<tr>';
                         echo '<td>';
-                        echo "<a href='$result->link' target='_blank'>$result->link</a></td>";
+                        echo "<a href='$result->link' target='_blank'>$result->link</a>";
 
                         // Thêm form và input với ID động
-                        echo "<td><form method='post' action='' id='test-form-$buttonCount'>";
+                        echo "<form method='post' action='' id='test-form-$buttonCount'>";
                         echo '<input type="hidden" name="url" value="' . $result->link . '">';
                         echo '<input type="submit" value="Submit" class="btn btn-primary btn-show-form" data-form-id="' . $buttonCount . '" id="btn-' . $buttonCount . '">';
                         echo '</form>';
@@ -103,7 +104,7 @@
                         echo '</td>';
                         echo '<td><div id="result-' . $buttonCount . '"></div></td>';
                         echo '<td><form action="" id="sum-form-' . $buttonCount . '" class="sum-form">
-                    <input type="hidden" name="content" id="input-sum-form-' . $buttonCount . '" value=""></td>';
+                    <input type="text" name="content" id="input-sum-form-' . $buttonCount . '" value=""></td>';
                         echo '<td><input type="submit" value="Tóm tắt" class="btn btn-primary btn-sum-form" id="btn-sum-form-' . $buttonCount . '" sum-form-id="' . $buttonCount . '"></form></td>';
                         echo '<td><div id="loading-spinner-' . $buttonCount . '" class="loading-spinner"></div><div id="result-sum-' . $buttonCount . '"></div></td>';
                         echo '</tr>';
@@ -189,7 +190,6 @@
                         // Xử lý dữ liệu trả về nếu cần
                         const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
                         inputSumForm.value = data;
-
                         // document.getElementById(`result-${formId}`).innerHTML = data;
 
                         if (data.trim() === "") {
@@ -249,13 +249,17 @@
                         count++;
                         if (count === 4) {
                             alert('Chỉ được chọn tối đa 3 nguồn khác nhau.');
+                            loadingSpinner.style.display = 'none';
                         }
+                        else
+                        {
                         loadingSpinner.style.display = 'none';
                         resultDiv.innerHTML = data;
                         document.getElementById('btn-rw').style.display = 'block';
-                        const inputSumForm = document.getElementById(`result-sum-${formId}`);
+                        const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
                         const inputRw = document.getElementById(`input-rw-${count}`);
                         inputRw.value = inputSumForm.value;
+                        }
                     })
                     .catch(error => {
                         console.error(error);
