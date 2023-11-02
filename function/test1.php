@@ -78,7 +78,7 @@
             <th scope="col">Status</th>
             <th scope="col">Nội dung</th>
             <th scope="col">Action</th>
-            <th scope="col">ND tóm tắt</th>
+            <th scope="col">ND</th>
           </tr>
         </thead>
         <tbody>';
@@ -247,7 +247,7 @@
                     })
                     .then(data => {
                         count++;
-                        if (count === 4) {
+                        if (count >= 4) {
                             alert('Chỉ được chọn tối đa 3 nguồn khác nhau.');
                             loadingSpinner.style.display = 'none';
                         }

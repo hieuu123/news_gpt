@@ -8,27 +8,27 @@
   <title>Trang E-commerce</title>
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/ticker-style.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/slicknav.css">
-    <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/hqn.css">
-    
-    <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
+  <!-- CSS here -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+  <link rel="stylesheet" href="assets/css/ticker-style.css">
+  <link rel="stylesheet" href="assets/css/flaticon.css">
+  <link rel="stylesheet" href="assets/css/slicknav.css">
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <link rel="stylesheet" href="assets/css/magnific-popup.css">
+  <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+  <link rel="stylesheet" href="assets/css/themify-icons.css">
+  <link rel="stylesheet" href="assets/css/slick.css">
+  <link rel="stylesheet" href="assets/css/nice-select.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/hqn.css">
+
+  <!-- Fontawesome -->
+  <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 
 </head>
 <style>
@@ -122,7 +122,6 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
-    width: 500px;
     max-width: 90%;
     overflow-y: scroll;
   }
@@ -167,13 +166,15 @@
     padding: 5px;
     box-sizing: border-box;
   }
-  #form__edit{
+
+  #form__edit {
     margin-bottom: 50px;
     background-color: #fff;
   }
-  .openmodal_{
+
+  .openmodal_ {
     background-color: #007bff;
-    color: black;
+    color: white;
     border: none;
     border-radius: 5px;
     text-align: left;
@@ -184,7 +185,7 @@
   }
 </style>
 <?php
-    include "index_header.php";
+include "index_header.php";
 ?>
 
 
@@ -235,7 +236,6 @@
                   $check = "invalid <br>";
                 }
               }
-              echo $check;
               if ($check == "user" || $check == "admin") {
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
@@ -252,37 +252,37 @@
                     <label for="email">Email</label><br><input type="text" name="email" placeholder="Email" value = "' . $email . '"> <br>
                     <label for="password">Password</label><br><input type="password" name="password" placeholder="Price e.g 01.00 $.." value = "' . $password . '"> <br>';
                   }
-                }}
-                else{
-                  echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
                 }
-                if ($check == "admin") {
-                  $query = "SELECT * FROM roles;";
-                  $result = $conn->query($query);
-                  $rows = $result->num_rows;
-                  echo '<label for="roles">Roles</label><br>
-                  <select name="roles">';
-                  for ($j = 0; $j < $rows; ++$j) {
-                    $variable = $result->data_seek($j);
-                    $row = $result->fetch_assoc();
-                    $a = $row['role_id'];
-                    $b = $row['role_name'];
-                    echo '<option value="' . $a . '">' . $b . '</option>';
-                  }
-                  echo '</select><br>';
-                }
-                echo '<input type="submit" value="Sửa user"></form>';
+              } else {
+                echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
               }
+              if ($check == "admin") {
+                $query = "SELECT * FROM roles;";
+                $result = $conn->query($query);
+                $rows = $result->num_rows;
+                echo '<label for="roles">Roles</label><br>
+                  <select name="roles">';
+                for ($j = 0; $j < $rows; ++$j) {
+                  $variable = $result->data_seek($j);
+                  $row = $result->fetch_assoc();
+                  $a = $row['role_id'];
+                  $b = $row['role_name'];
+                  echo '<option value="' . $a . '">' . $b . '</option>';
+                }
+                echo '</select><br>';
+              }
+              echo '<input type="submit" value="Sửa user"></form>';
+            }
             ?>
           </form>
           <?php
-                      if (
-                        isset($_POST['roles']) &&
-                        isset($_POST['username']) &&
-                        isset($_POST['password'])
-                      ) {
-          if ($check == "admin") {
-            echo '</div></div>
+          if (
+            isset($_POST['roles']) &&
+            isset($_POST['username']) &&
+            isset($_POST['password'])
+          ) {
+            if ($check == "admin") {
+              echo '</div></div>
             <br>
             <h3>Sửa thông tin các tài khoản trong hệ thống</h3>
             <button class="openmodal_" onclick="openPopup()">Open Popup</button>
@@ -295,93 +295,116 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Password</th>
+                    <th>Roles</th>
                   </tr>';
-                  for ($j = 0; $j < $rows; ++$j) {
-                    $query = "SELECT * FROM users
-          JOIN roles ON users.role_id = roles.role_id
-          ORDER BY user_id ASC;";
-                    $result = $conn->query($query);
-                    $rows = $result->num_rows;
-                    $variable = $result->data_seek($j);
-                    $row = $result->fetch_assoc();
-                    $user_id = $row['user_id'];
-                    $username = $row['username'];
-                    $password = $row['password'];
-                    $email = $row['email'];
-                    $role_name = $row['role_name'];
-                    echo '
-                        <tr>
-                            <td><input type="text" name="user_id" value="' . $user_id . '" readonly></td>
-                            <td><input type="text" name="username" value="' . $username . '"></td>
-                            <td><input type="text" name="email" value="' . $email . '"></td>
-                            <td><input type="password" name="password" value="' . $password . '"></td>
-                        </tr>
-                        ';
-                  }
-                  echo '</table>';
-                  if ($check == "user" || $check == "admin") {
-                    echo '<button type="submit">Submit</button>';
-                  }  
-                  echo'</div>
-                </div>';
-          }}
-          else {
+                  $query = "SELECT * FROM users
+                  JOIN roles ON users.role_id = roles.role_id
+                  ORDER BY user_id ASC;";
+        $result = $conn->query($query);
+        $rows = $result->num_rows;
+        
+        for ($j = 0; $j < $rows; ++$j) {
+            $result->data_seek($j);
+            $row = $result->fetch_assoc();
+            $user_id = $row['user_id'];
+            $username = $row['username'];
+            $password = $row['password'];
+            $email = $row['email'];
+            $id_role = $row['role_id'];
+        
+            echo '<form action="chucnang/edit_user_process.php" method="post" id="post">';
+            echo '<tr>';
+            echo '<td><input type="text" name="user_id" value="' . $user_id . '" readonly></td>';
+            echo '<td><input type="text" name="username" value="' . $username . '"></td>';
+            echo '<td><input type="text" name="email" value="' . $email . '"></td>';
+            echo '<td><input type="password" name="password" value="' . $password . '"></td>';
+        
+            $rolesQuery = "SELECT * FROM roles;";
+            $rolesResult = $conn->query($rolesQuery);
+            $rolesRows = $rolesResult->num_rows;
+        
+            echo '<td><select name="roles">';
+            for ($i = 0; $i < $rolesRows; ++$i) {
+                $rolesResult->data_seek($i);
+                $rolesRow = $rolesResult->fetch_assoc();
+                $role_id = $rolesRow['role_id'];
+                $role_name = $rolesRow['role_name'];
+                if ($role_id == $id_role) {
+                  echo '<option value="' . $role_id . '" selected>' . $role_name . '</option>';
+                } else {
+                  echo '<option value="' . $role_id . '">' . $role_name . '</option>';
+                }
+            }
+            echo '</select></td></tr><tr>';
+            
+            echo '<td><input type="submit" value="Sửa"></td>';
+            echo '<td><a id="update" href="chucnang/delete_user_process.php?user_id=' . $user_id . '">';
+            echo '<button type="button" class="btn-primary">Xóa</button></a></td>';
+        
+            echo '</tr>';
+            echo '</form>';
+        }
+        
+        echo '</table>';
+            }
+          } else {
           }
-                  ?>
+          ?>
 
-            <script>
-              function openPopup() {
-                document.getElementById("overlay").classList.add("visible");
-              }
-              function closePopup() {
-                document.getElementById("overlay").classList.remove("visible");
-              }
-            </script>
+          <script>
+            function openPopup() {
+              document.getElementById("overlay").classList.add("visible");
+            }
+
+            function closePopup() {
+              document.getElementById("overlay").classList.remove("visible");
+            }
+          </script>
         </div>
       </div>
     </div>
   </div>
-    <?php
-    include 'index_footer.php';
-    ?>
-        <!-- All JS Custom Plugins Link Here here -->
-    <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-    <!-- Jquery, Popper, Bootstrap -->
-    <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="./assets/js/popper.min.js"></script>
-    <script src="./assets/js/bootstrap.min.js"></script>
-    <!-- Jquery Mobile Menu -->
-    <script src="./assets/js/jquery.slicknav.min.js"></script>
+  <?php
+  include 'index_footer.php';
+  ?>
+  <!-- All JS Custom Plugins Link Here here -->
+  <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+  <!-- Jquery, Popper, Bootstrap -->
+  <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+  <script src="./assets/js/popper.min.js"></script>
+  <script src="./assets/js/bootstrap.min.js"></script>
+  <!-- Jquery Mobile Menu -->
+  <script src="./assets/js/jquery.slicknav.min.js"></script>
 
-    <!-- Jquery Slick , Owl-Carousel Plugins -->
-    <script src="./assets/js/owl.carousel.min.js"></script>
-    <script src="./assets/js/slick.min.js"></script>
-    <!-- Date Picker -->
-    <script src="./assets/js/gijgo.min.js"></script>
-    <!-- One Page, Animated-HeadLin -->
-    <script src="./assets/js/wow.min.js"></script>
-    <script src="./assets/js/animated.headline.js"></script>
-    <script src="./assets/js/jquery.magnific-popup.js"></script>
+  <!-- Jquery Slick , Owl-Carousel Plugins -->
+  <script src="./assets/js/owl.carousel.min.js"></script>
+  <script src="./assets/js/slick.min.js"></script>
+  <!-- Date Picker -->
+  <script src="./assets/js/gijgo.min.js"></script>
+  <!-- One Page, Animated-HeadLin -->
+  <script src="./assets/js/wow.min.js"></script>
+  <script src="./assets/js/animated.headline.js"></script>
+  <script src="./assets/js/jquery.magnific-popup.js"></script>
 
-    <!-- Breaking New Pluging -->
-    <script src="./assets/js/jquery.ticker.js"></script>
-    <script src="./assets/js/site.js"></script>
+  <!-- Breaking New Pluging -->
+  <script src="./assets/js/jquery.ticker.js"></script>
+  <script src="./assets/js/site.js"></script>
 
-    <!-- Scrollup, nice-select, sticky -->
-    <script src="./assets/js/jquery.scrollUp.min.js"></script>
-    <script src="./assets/js/jquery.nice-select.min.js"></script>
-    <script src="./assets/js/jquery.sticky.js"></script>
+  <!-- Scrollup, nice-select, sticky -->
+  <script src="./assets/js/jquery.scrollUp.min.js"></script>
+  <script src="./assets/js/jquery.nice-select.min.js"></script>
+  <script src="./assets/js/jquery.sticky.js"></script>
 
-    <!-- contact js -->
-    <script src="./assets/js/contact.js"></script>
-    <script src="./assets/js/jquery.form.js"></script>
-    <script src="./assets/js/jquery.validate.min.js"></script>
-    <script src="./assets/js/mail-script.js"></script>
-    <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+  <!-- contact js -->
+  <script src="./assets/js/contact.js"></script>
+  <script src="./assets/js/jquery.form.js"></script>
+  <script src="./assets/js/jquery.validate.min.js"></script>
+  <script src="./assets/js/mail-script.js"></script>
+  <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
 
-    <!-- Jquery Plugins, main Jquery -->
-    <script src="./assets/js/plugins.js"></script>
-    <script src="./assets/js/main.js"></script>
+  <!-- Jquery Plugins, main Jquery -->
+  <script src="./assets/js/plugins.js"></script>
+  <script src="./assets/js/main.js"></script>
 </body>
 
 </html>

@@ -50,7 +50,7 @@
         echo "<br><p>Kết quả tìm kiếm cho: $query</p>";
 
         $googleApiKey = 'AIzaSyCDXqgZigJoUY7u7Bq56Y2RqvcB-eDV8XM'; // 1st project
-        //$googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
+        // $googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
         $customSearchEngineId = '373366471dba54c47';
 
         // Mã hoá từ khóa trước khi sử dụng trong URL
