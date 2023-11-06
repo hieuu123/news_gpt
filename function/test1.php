@@ -67,26 +67,25 @@
             $encodedQuery = urlencode($query);
 
             $url = "https://www.googleapis.com/customsearch/v1?q=$encodedQuery&key=$googleApiKey&cx=$customSearchEngineId";
-
+            echo $url;
             $response = file_get_contents($url);
-
             $data = json_decode($response);
-            echo '<table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Trang nguồn</th>
-            <th scope="col">Status</th>
-            <th scope="col">Nội dung</th>
-            <th scope="col">Action</th>
-            <th scope="col">ND</th>
-          </tr>
-        </thead>
-        <tbody>';
+
             if (isset($data->items) && !empty($data->items)) {
                 $results = $data->items;
-
                 // Lấy ra 3 kết quả đầu tiên
-                $firstThreeResults = array_slice($results, 0, 20);
+                echo '<table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Trang nguồn</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Nội dung</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">ND</th>
+                  </tr>
+                </thead>
+                <tbody>';
+                $firstThreeResults = array_slice($results, 0, 10);
                 if (!empty($firstThreeResults)) {
 
                     $buttonCount = 1; // Biến đếm cho ID của button
@@ -110,6 +109,7 @@
                         echo '</tr>';
                         $buttonCount++; // Tăng biến đếm cho ID của button
                     }
+                    echo'</tbody></table>';
                 } else {
                     echo "Không tìm thấy kết quả nào cho từ khóa '$query'.";
                 }
@@ -218,9 +218,6 @@
     <script>
         const s_buttons = document.querySelectorAll('.btn-sum-form');
         let count = 0;
-        if (count === 4) {
-            alert('Chỉ được chọn tối đa 3 nguồn khác nhau.');
-        }
         s_buttons.forEach((s_button) => {
             s_button.addEventListener('click', (event) => {
                 event.preventDefault();
