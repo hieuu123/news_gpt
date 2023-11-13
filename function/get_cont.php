@@ -43,18 +43,31 @@
         $content[$j] = $row['content'];
     }
     if (isset($_POST['url'])) {
-
         $url = $_POST['url'];
-        
-        $htmlContent = file_get_contents($url);
-
+    
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    
+        $htmlContent = curl_exec($curl);
+    
+        if ($htmlContent === false) {
+            echo 'Failed to fetch the URL: ' . curl_error($curl);
+            curl_close($curl);
+            return;
+        }
+    
+        curl_close($curl);
+    
+        // Process the HTML content
         $dom = new DOMDocument();
-
-        // Tải nội dung HTML vào DOMDocument
-        @$dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'));
-
+        libxml_use_internal_errors(true); // Disable libxml errors and warnings
+        $dom->loadHTML(mb_convert_encoding($htmlContent, 'HTML-ENTITIES', 'UTF-8'));
+        libxml_clear_errors();
+    
         $xpath = new DOMXPath($dom);
-
+    
         $result = ""; // Tạo một biến để lưu kết quả
         $a = 0;
         while ($a < $rows) {
@@ -77,7 +90,7 @@
                 }
     
                 echo $result;
-            } 
+            }
             $a = $a + 1;
         }
     }
