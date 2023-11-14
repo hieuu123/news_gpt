@@ -313,9 +313,9 @@
                                 loadingSpinner.style.display = 'none';
                                 resultDiv.innerHTML = data;
                                 document.getElementById('btn-rw').style.display = 'block';
-                                const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
+                                const inputSumForm = document.getElementById(`result-sum-${formId}`);
                                 const inputRw = document.getElementById(`input-rw-${count}`);
-                                inputRw.value = inputSumForm.value;
+                                inputRw.value = inputSumForm.innerText;
                             }
                         })
                         .catch(error => {
