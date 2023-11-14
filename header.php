@@ -152,6 +152,18 @@
                                 <div class="header-info-right">
                                     <ul class="header-social">
                                         <li>
+                                            <a id="nut2" href="add_edit_categories.php">Thêm Phụ Lục</a>
+                                        </li>
+                                        <li>
+                                            <a id="nut3" href="post.php">Viết Bài</a>
+                                        </li>
+                                        <li>
+                                            <a id="nut4" href="post_gpt.php">Viết Bài GPT</a>
+                                        </li>
+                                        <li>
+                                            <a id="nut5" href="post_table.php">Chỉnh Sửa Bài Đăng</a>
+                                        </li>
+                                        <li>
                                             <a id="loginBtn">Đăng Nhập</a>
                                             <ul class="dropdown-menu1">
                                                 <li id="account"><a href="#">Chỉnh sửa thông tin</a></li>
@@ -480,7 +492,7 @@
         const dropdownMenu = document.querySelector('.dropdown-menu1');
 
         loginBtn.addEventListener('mouseover', function() {
-            if (role !== null && role !== 'Đăng nhập') {
+            if (role !== null && role !== 'Đăng Nhập') {
                 dropdownMenu.classList.toggle('active');
             }
         });
@@ -566,11 +578,18 @@
         function logout() {
             localStorage.setItem('username', '');
             localStorage.setItem('password', '');
-            localStorage.setItem('role', 'Đăng nhập');
+            localStorage.setItem('role', 'Đăng Nhập');
             location.reload();
         }
-        if (role !== null && role !== 'Đăng nhập') {
+        if (role !== null && role !== 'Đăng Nhập') {
             document.getElementById('nut1').style.display = 'none';
+        }
+        else
+        {
+            document.getElementById('nut2').style.display = 'none';
+            document.getElementById('nut3').style.display = 'none';
+            document.getElementById('nut4').style.display = 'none';
+            document.getElementById('nut5').style.display = 'none';
         }
     </script>
     </header>

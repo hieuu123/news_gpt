@@ -348,6 +348,7 @@ include "header.php";
         echo '</table>';
             }
           } else {
+            echo "Bạn chưa đăng nhập hoặc phiên đăng nhập không hợp lệ";
           }
           ?>
 

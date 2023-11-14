@@ -103,7 +103,7 @@
 
     <body>
         <div class="container">
-            <h1>Tìm kiếm kết quả</h1>
+            <h1 style="margin-top: 15px;">Tìm kiếm chủ đề viết bài GPT</h1>
 
             <form action="" method="post">
                 <div class="form-group">
