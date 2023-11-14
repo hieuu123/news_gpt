@@ -26,23 +26,28 @@
 
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <?php
-    include_once("header.php");
-    ?>
-    <title>Tìm kiếm bằng Google CSE</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
 
     <style>
         [id^="btn-sum-form"] {
             display: none;
-            margin: 0 auto;
+            /* margin: 0 auto; */
         }
 
         [id^="input-sum-form"] {
             border: none;
+        }
+
+        .table {
+            table-layout: fixed;
+        }
+
+        .link-column a {
+            word-wrap: break-word;
+            /* Đảm bảo từ có thể xuống dòng */
+            word-break: break-all;
+            /* Ngắt từ ở bất cứ điểm nào nếu cần */
+            max-width: 100%;
+            /* Giới hạn độ rộng tối đa */
         }
 
         .loading-spinner {
@@ -99,102 +104,109 @@
             transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
         }
     </style>
-    </head>
+</head>
 
-    <body>
-        <div class="container">
-            <h1>Tìm kiếm kết quả</h1>
+<body>
+    <?php
+    include_once("header.php");
+    ?>
+    <title>Tìm kiếm bằng Google CSE</title>
+    <!-- <link rel="stylesheet" href="../assets/css/bootstrap.min.css"> -->
 
-            <form action="" method="post">
-                <div class="form-group">
-                    <input type="text" name="query" class="form-control" placeholder="Nhập từ khóa...">
-                </div>
-                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-            </form>
 
-            <?php
-            if (isset($_POST['query'])) {
-                $query = $_POST['query'];
+    <div class="container">
+        <h1 style="margin-top:30px;">Tìm kiếm kết quả</h1>
 
-                echo "<br><p>Kết quả tìm kiếm cho: $query</p>";
+        <form action="" method="post">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Nhập từ khóa...">
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
 
-                //$googleApiKey = 'AIzaSyCDXqgZigJoUY7u7Bq56Y2RqvcB-eDV8XM'; // 1st project
-                $googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
-                $customSearchEngineId = '373366471dba54c47';
+        <?php
+        if (isset($_POST['query'])) {
+            $query = $_POST['query'];
 
-                // Mã hoá từ khóa trước khi sử dụng trong URL
-                $encodedQuery = urlencode($query);
+            echo "<br><p>Kết quả tìm kiếm cho: $query</p>";
 
-                $url = "https://www.googleapis.com/customsearch/v1?q=$encodedQuery&key=$googleApiKey&cx=$customSearchEngineId";
+            //$googleApiKey = 'AIzaSyCDXqgZigJoUY7u7Bq56Y2RqvcB-eDV8XM'; // 1st project
+            $googleApiKey = 'AIzaSyA3Eti-y6OZJKeOqg-P2Uy4wHNnk7ox1Vg'; // 2nd project
+            $customSearchEngineId = '373366471dba54c47';
 
-                $response = file_get_contents($url);
+            // Mã hoá từ khóa trước khi sử dụng trong URL
+            $encodedQuery = urlencode($query);
 
-                $data = json_decode($response);
+            $url = "https://www.googleapis.com/customsearch/v1?q=$encodedQuery&key=$googleApiKey&cx=$customSearchEngineId";
 
-                if (isset($data->items) && !empty($data->items)) {
-                    $results = $data->items;
+            $response = file_get_contents($url);
 
-                    // Lấy ra 10 kết quả đầu tiên
-                    $firstTenResults = array_slice($results, 0, 10);
+            $data = json_decode($response);
 
-                    if (!empty($firstTenResults)) {
-                        echo '<table class="table">';
-                        echo '<thead><tr>
+            if (isset($data->items) && !empty($data->items)) {
+                $results = $data->items;
+
+                // Lấy ra 10 kết quả đầu tiên
+                $firstTenResults = array_slice($results, 0, 10);
+
+                if (!empty($firstTenResults)) {
+                    echo '<table class="table">';
+                    echo '<thead><tr>
                         <th class = "col-2">Link</th>
                         <th class = "col-2">Actions</th>
                         <th class = "col-2">Result</th>
                         <th class = "col-2">Summary Form</th>
                         <th>Summary Result</th>
                         </tr></thead>';
-                        echo '<tbody>';
+                    echo '<tbody>';
 
-                        $buttonCount = 1; // Biến đếm cho ID của button
-                        foreach ($firstTenResults as $result) {
-                            echo '<tr>';
-                            echo "<td class='col-2 link-column'><a href='$result->link' target='_blank' class='a_tool'>$result->link</a></td>";
+                    $buttonCount = 1; // Biến đếm cho ID của button
+                    foreach ($firstTenResults as $result) {
+                        echo '<tr>';
+                        echo "<td class='col-2 link-column'><a href='$result->link' target='_blank' class='a_tool'>$result->link</a></td>";
 
-                            // Thêm cột cho các nút lấy nội dung và tóm tắt
-                            echo "<td class='col-2'>";
-                            // Form lấy nội dung
-                            echo "<form method='post' action='' id='test-form-$buttonCount' style='display: inline;'>";
-                            echo '<input type="hidden" name="url" value="' . $result->link . '">';
-                            echo '<input type="submit" value="Get Content" class="btn_tool btn-danger btn-show-form" data-form-id="' . $buttonCount . '">';
-                            echo '</form>';
+                        // Thêm cột cho các nút lấy nội dung và tóm tắt
+                        echo "<td class='col-2'>";
+                        // Form lấy nội dung
+                        echo "<form method='post' action='' id='test-form-$buttonCount' style='display: inline;'>";
+                        echo '<input type="hidden" name="url" value="' . $result->link . '">';
+                        echo '<input type="submit" value="Get Content" class="btn_tool btn-danger btn-show-form" data-form-id="' . $buttonCount . '">';
+                        echo '</form>';
 
-                            // Nút tóm tắt
-                            echo "<br><br><button class='btn_tool btn-danger btn-show-form' id='btn-sum-form-$buttonCount' sum-form-id='$buttonCount' style=''>Summarize</button>";
-                            echo "</td>";
+                        // Nút tóm tắt
+                        echo "<br><br><button class='btn_tool btn-danger btn-sum-form' id='btn-sum-form-$buttonCount' sum-form-id='$buttonCount' style=''>Summarize</button>";
+                        echo "</td>";
 
-                            // Cột hiển thị kết quả và form tóm tắt
-                            echo "<td class='col-2'><div id='result-$buttonCount'></div></td>";
-                            echo "<td class='col-2'>";
-                            echo "<form action='' id='sum-form-$buttonCount' class='sum-form'>";
-                            echo "<input type='text' name='content' id='input-sum-form-$buttonCount' value=''>";
-                            echo "</form>";
-                            echo "</td>";
-                            echo "<td><div id='result-sum-$buttonCount'></div>
+                        // Cột hiển thị kết quả và form tóm tắt
+                        echo "<td class='col-2'><div id='result-$buttonCount'></div></td>";
+                        echo "<td class='col-2'>";
+                        echo "<form action='' id='sum-form-$buttonCount' class='sum-form'>";
+                        echo "<input type='text' name='content' id='input-sum-form-$buttonCount' value=''>";
+                        echo "</form>";
+                        echo "</td>";
+                        echo "<td><div id='result-sum-$buttonCount'></div>
                                 <div id='loading-spinner-$buttonCount' class='loading-spinner'></div>
                                 </td>";
 
-                            echo '</tr>';
-                            $buttonCount++;
-                        }
-
-                        echo '</tbody></table>';
-                    } else {
-                        echo "Không tìm thấy kết quả nào cho từ khóa '$query'.";
+                        echo '</tr>';
+                        $buttonCount++;
                     }
+
+                    echo '</tbody></table>';
                 } else {
-                    echo "Không tìm thấy kết quả cho từ khóa '$query'.";
+                    echo "Không tìm thấy kết quả nào cho từ khóa '$query'.";
                 }
+            } else {
+                echo "Không tìm thấy kết quả cho từ khóa '$query'.";
             }
+        }
 
-            // include('get_content.php');
+        // include('get_content.php');
 
-            ?>
-            <br>
+        ?>
+        <br>
 
-            <!-- <div class="row text-center">
+        <!-- <div class="row text-center">
             <div class="col">
                 <div id="result-1"></div>
             </div>
@@ -254,181 +266,128 @@
         </div>
         <br> -->
 
-            <!-- Form sáng tạo bài viết -->
-            <div class="container text-center">
-                <form action="" id="rw-form">
-                    <div class="row">
-                        <div class="col">
-                            <input type="hidden" value="" id="input-rw-1" name="input-rw-1">
-                        </div>
-                        <div class="col">
-                            <input type="hidden" value="" id="input-rw-2" name="input-rw-2">
-                        </div>
-                        <div class="col">
-                            <input type="hidden" value="" id="input-rw-3" name="input-rw-3">
-                        </div>
+        <!-- Form sáng tạo bài viết -->
+        <div class="container text-center">
+            <form action="" id="rw-form">
+                <div class="row">
+                    <div class="col">
+                        <input type="hidden" value="" id="input-rw-1" name="input-rw-1">
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <input type="submit" value="Submit" class="btn btn-primary" id="btn-rw">
-                        </div>
+                    <div class="col">
+                        <input type="hidden" value="" id="input-rw-2" name="input-rw-2">
                     </div>
-                </form>
-                <br>
-                <div class="col" id="rw-result"></div>
-                <div class="col">
-                    <div id="loading-spinner-rw" class="loading-spinner"></div>
+                    <div class="col">
+                        <input type="hidden" value="" id="input-rw-3" name="input-rw-3">
+                    </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <input type="submit" value="Submit" class="btn btn-primary" id="btn-rw">
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="col" id="rw-result"></div>
+            <div class="col">
+                <div id="loading-spinner-rw" class="loading-spinner"></div>
             </div>
         </div>
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-        <!-- Mã script xử lí lấy nội dung các thẻ HTML từ bài viết -->
-        <script>
-            const buttons = document.querySelectorAll('.btn-show-form');
+    <!-- Mã script xử lí lấy nội dung các thẻ HTML từ bài viết -->
+    <script>
+        const buttons = document.querySelectorAll('.btn-show-form');
 
-            buttons.forEach((button) => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    const formId = event.target.getAttribute('data-form-id');
-                    // console.log(formId);
-                    const form = document.getElementById(`test-form-${formId}`);
-                    const resultDiv = document.getElementById(`result-${formId}`);
-                    const resultButton = document.getElementById(`btn-sum-form-${formId}`); //New
-
-                    // Lấy dữ liệu từ form
-                    const formData = new FormData(form);
-
-                    // Gửi yêu cầu POST tới get_content.php
-                    fetch('function/get_cont.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.text();
-                            } else {
-                                throw new Error('Lỗi khi gửi POST yêu cầu');
-                            }
-                        })
-                        .then(data => {
-                            // console.log(data);
-                            // Xử lý dữ liệu trả về nếu cần
-                            const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
-                            inputSumForm.value = data;
-
-                            // document.getElementById(`result-${formId}`).innerHTML = data;
-
-                            if (data.trim() === "") {
-                                resultDiv.innerHTML = "Chưa lấy được nội dung!";
-                            } else {
-                                resultDiv.innerHTML = "Đã lấy được nội dung!";
-                                checkAndDisplayButton(resultDiv, resultButton); //New
-                            }
-                        })
-                        .catch(error => {
-                            console.error(error);
-                        });
-                });
-            });
-
-            // Hàm kiểm tra và hiển thị button
-            function checkAndDisplayButton(resultDiv, button) {
-                if (resultDiv.innerHTML === 'Đã lấy được nội dung!') {
-                    button.style.display = 'block';
-                } else {
-                    button.style.display = 'none';
-                }
-            }
-        </script>
-
-        <!-- Mã script xử lí tóm tắt nội dung bài viết từ các thẻ HTML lấy được -->
-        <script>
-            let processedCount = 0; // Biến theo dõi số bài viết đã xử lý
-            let summarizeCount = 0; // Biến theo dõi số lần nút Summarize được click
-
-            const s_buttons = document.querySelectorAll('.btn-sum-form');
-
-            s_buttons.forEach((s_button) => {
-                s_button.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    // Thêm kiểm tra này
-                    if (summarizeCount >= 3) {
-                        alert('Chỉ được phép tóm tắt tối đa 3 bài viết.');
-                        return; // Ngừng thực hiện các hành động tiếp theo
-                    }
-
-                    // Tăng biến đếm ngay khi click nút Summarize 
-                    summarizeCount++;
-
-                    const formId = event.target.getAttribute('sum-form-id');
-                    const sumForm = document.getElementById(`sum-form-${formId}`);
-                    const resultDiv = document.getElementById(`result-sum-${formId}`);
-                    const loadingSpinner = document.getElementById(`loading-spinner-${formId}`); //New
-
-                    // Hiển thị vòng tròn loading khi bắt đầu gửi yêu cầu POST
-                    loadingSpinner.style.display = 'block';
-
-                    // Lấy dữ liệu từ form #sum-form-
-                    const formData = new FormData(sumForm);
-
-                    // Gửi yêu cầu POST tới sum_content.php
-                    fetch('function/sum_content.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => {
-                            if (response.ok) {
-                                return response.text();
-                            } else {
-                                throw new Error('Lỗi khi gửi POST yêu cầu');
-                            }
-                        })
-                        .then(data => {
-                            // Xử lý dữ liệu trả về nếu cần
-                            loadingSpinner.style.display = 'none'; //New
-                            resultDiv.innerHTML = data;
-
-                            document.getElementById('btn-rw').style.display = 'block';
-
-                            // const inputSumForm = document.getElementById(`input-rw-${formId}`);
-                            // inputSumForm.value = data;
-
-                            // Kiểm tra và cập nhật vào input-rw- chỉ khi processedCount < 3
-                            if (processedCount < 3) {
-                                processedCount++;
-                                document.getElementById(`input-rw-${processedCount}`).value = data;
-                            }
-
-                            // Hiển thị nút 'Submit' khi cần
-                            if (processedCount === 1) {
-                                document.getElementById('btn-rw').style.display = 'block';
-                            }
-                        })
-                        .catch(error => {
-                            console.error(error);
-                            loadingSpinner.style.display = 'none'; //New
-                        });
-                })
-            })
-        </script>
-
-        <!-- Mã script xử lí sáng tạo bài viết mới dựa trên 3 tóm tắt tạo được -->
-        <script>
-            const RwBtn = document.getElementById('btn-rw');
-
-            RwBtn.addEventListener('click', (event) => {
+        buttons.forEach((button) => {
+            button.addEventListener('click', (event) => {
                 event.preventDefault();
 
-                document.getElementById('loading-spinner-rw').style.display = 'block';
+                const formId = event.target.getAttribute('data-form-id');
+                // console.log(formId);
+                const form = document.getElementById(`test-form-${formId}`);
+                const resultDiv = document.getElementById(`result-${formId}`);
+                const resultButton = document.getElementById(`btn-sum-form-${formId}`); //New
 
-                const RwForm = document.getElementById('rw-form');
-                const formData = new FormData(RwForm);
+                // Lấy dữ liệu từ form
+                const formData = new FormData(form);
 
+                // Gửi yêu cầu POST tới get_content.php
+                fetch('function/get_cont.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error('Lỗi khi gửi POST yêu cầu');
+                        }
+                    })
+                    .then(data => {
+                        // console.log(data);
+                        // Xử lý dữ liệu trả về nếu cần
+                        const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
+                        inputSumForm.value = data;
 
+                        // document.getElementById(`result-${formId}`).innerHTML = data;
+
+                        if (data.trim() === "") {
+                            resultDiv.innerHTML = "Chưa lấy được nội dung!";
+                        } else {
+                            resultDiv.innerHTML = "Đã lấy được nội dung!";
+                            checkAndDisplayButton(resultDiv, resultButton); //New
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        });
+
+        // Hàm kiểm tra và hiển thị button
+        function checkAndDisplayButton(resultDiv, button) {
+            if (resultDiv.innerHTML === 'Đã lấy được nội dung!') {
+                button.style.display = 'block';
+            } else {
+                button.style.display = 'none';
+            }
+        }
+    </script>
+
+    <!-- Mã script xử lí tóm tắt nội dung bài viết từ các thẻ HTML lấy được -->
+    <script>
+        let processedCount = 0; // Biến theo dõi số bài viết đã xử lý
+        let summarizeCount = 0; // Biến theo dõi số lần nút Summarize được click
+
+        const s_buttons = document.querySelectorAll('.btn-sum-form');
+
+        s_buttons.forEach((s_button) => {
+            s_button.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                // Thêm kiểm tra này
+                if (summarizeCount >= 3) {
+                    alert('Chỉ được phép tóm tắt tối đa 3 bài viết.');
+                    return; // Ngừng thực hiện các hành động tiếp theo
+                }
+
+                // Tăng biến đếm ngay khi click nút Summarize 
+                summarizeCount++;
+
+                const formId = event.target.getAttribute('sum-form-id');
+                const sumForm = document.getElementById(`sum-form-${formId}`);
+                const resultDiv = document.getElementById(`result-sum-${formId}`);
+                const loadingSpinner = document.getElementById(`loading-spinner-${formId}`); //New
+
+                // Hiển thị vòng tròn loading khi bắt đầu gửi yêu cầu POST
+                loadingSpinner.style.display = 'block';
+
+                // Lấy dữ liệu từ form #sum-form-
+                const formData = new FormData(sumForm);
+
+                // Gửi yêu cầu POST tới sum_content.php
                 fetch('function/sum_content.php', {
                         method: 'POST',
                         body: formData
@@ -442,21 +401,74 @@
                     })
                     .then(data => {
                         // Xử lý dữ liệu trả về nếu cần
-                        document.getElementById('loading-spinner-rw').style.display = 'none';
+                        loadingSpinner.style.display = 'none'; //New
+                        resultDiv.innerHTML = data;
 
-                        document.getElementById('rw-result').innerHTML = data;
+                        document.getElementById('btn-rw').style.display = 'block';
+
+                        // const inputSumForm = document.getElementById(`input-rw-${formId}`);
+                        // inputSumForm.value = data;
+
+                        // Kiểm tra và cập nhật vào input-rw- chỉ khi processedCount < 3
+                        if (processedCount < 3) {
+                            processedCount++;
+                            document.getElementById(`input-rw-${processedCount}`).value = data;
+                        }
+
+                        // Hiển thị nút 'Submit' khi cần
+                        if (processedCount === 1) {
+                            document.getElementById('btn-rw').style.display = 'block';
+                        }
                     })
                     .catch(error => {
                         console.error(error);
-                        document.getElementById('loading-spinner-rw').style.display = 'none';
+                        loadingSpinner.style.display = 'none'; //New
                     });
-
             })
-        </script>
+        })
+    </script>
 
-    </body>
-    <?php
-    include_once("footer.php");
-    ?>
+    <!-- Mã script xử lí sáng tạo bài viết mới dựa trên 3 tóm tắt tạo được -->
+    <script>
+        const RwBtn = document.getElementById('btn-rw');
+
+        RwBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+
+            document.getElementById('loading-spinner-rw').style.display = 'block';
+
+            const RwForm = document.getElementById('rw-form');
+            const formData = new FormData(RwForm);
+
+
+            fetch('function/sum_content.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Lỗi khi gửi POST yêu cầu');
+                    }
+                })
+                .then(data => {
+                    // Xử lý dữ liệu trả về nếu cần
+                    document.getElementById('loading-spinner-rw').style.display = 'none';
+
+                    document.getElementById('rw-result').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('loading-spinner-rw').style.display = 'none';
+                });
+
+        })
+    </script>
+
+</body>
+<?php
+include_once("footer.php");
+?>
 
 </html>
