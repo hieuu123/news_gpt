@@ -1,6 +1,6 @@
 <?php
 set_time_limit(1200);
-$api_key = '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';
+$api_key = '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';
 
 $endpoint = 'https://api.openai.com/v1/chat/completions';
 $output = '';
@@ -37,18 +37,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
         'presence_penalty' => 0
     ];
 
-    $ch = curl_init($endpoint);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $ch = curl_init($endpoint); //Tạo phiên cURL mới
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //Thiết lập không in kết quả của yc cURL trực tiếp mà trả về như 1 chuỗi
+    curl_setopt($ch, CURLOPT_POST, true); //Phương thức yêu cầu là POST
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data)); //Thiết lập dữ liệu để gửi yc POST
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); //Thiết lập các header HTTP cho yêu cầu
 
-    $response = curl_exec($ch);
+    $response = curl_exec($ch); //Gửi yêu cầu tới API và lưu phản hồi
 
-    if (curl_errno($ch)) {
+    if (curl_errno($ch)) { //Kiểm tra lỗi, nếu có lưu vào $output
         $output = 'Error:' . curl_error($ch);
-    } else {
-        $decodedResponse = json_decode($response, true);
+    } else { 
+        $decodedResponse = json_decode($response, true); //Giải mã phản hồi, tìm phần tử mong muốn và lưu vào $output
         if (isset($decodedResponse['choices'][0]['message']['content'])) {
             $output = $decodedResponse['choices'][0]['message']['content'];
         } else {
