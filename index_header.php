@@ -329,7 +329,7 @@
         document.getElementById('loginBtn').addEventListener('click', function() {
             document.getElementById('modal').style.display = 'block';
         });
-        var role = localStorage.getItem('role');
+        var role = localStorage.getItem('role'); //Chuyển nút đăng nhập = role_name
         document.getElementById('loginBtn').value = role;
         console.log(role);
         if (role !== null && role !== undefined) {
@@ -404,7 +404,7 @@
             passwordInput.value = '';
             // Lấy giá trị của 'role' từ localStorage
         });
-        ////
+        //// Đăng kí
         const form_signup = document.getElementById('formsignup');
         let username_signup = document.getElementById('username_signup');
         let email_signup = document.getElementById('email_signup');

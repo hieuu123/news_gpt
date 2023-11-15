@@ -103,7 +103,7 @@
 
     <body>
         <div class="container">
-            <h1>Tìm kiếm kết quả</h1>
+            <h1 style="margin-top: 15px;">Tìm kiếm chủ đề viết bài GPT</h1>
 
             <form action="" method="post">
                 <div class="form-group">
@@ -313,9 +313,9 @@
                                 loadingSpinner.style.display = 'none';
                                 resultDiv.innerHTML = data;
                                 document.getElementById('btn-rw').style.display = 'block';
-                                const inputSumForm = document.getElementById(`input-sum-form-${formId}`);
+                                const inputSumForm = document.getElementById(`result-sum-${formId}`);
                                 const inputRw = document.getElementById(`input-rw-${count}`);
-                                inputRw.value = inputSumForm.value;
+                                inputRw.value = inputSumForm.innerText;
                             }
                         })
                         .catch(error => {

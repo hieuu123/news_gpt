@@ -92,7 +92,7 @@
                                                     </div>
                                                     <div class='trend-bottom-cap'>
                                                         <span class='color2'>{$row['title']}</span>
-                                                        <h4><a href='detail_M.php'>{$row['content']}</a></h4>
+                                                        <h4><a href='detail_M.php?post_id={$row['post_id']}'>{$row['content']}</a></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,7 +123,7 @@
                             $start_row = 3; // Hàng bắt đầu (là hàng thứ 4)
                             $end_row = 7;   // Hàng kết thúc (là hàng thứ 8)
                             
-                            $sql = "SELECT posts.*, categories.category_id
+                            $sql = "SELECT posts.*, post_id, categories.category_id
                                     FROM posts INNER JOIN categories ON posts.category_id = categories.category_id
                                     WHERE posts.category_id = $category_id
                                     LIMIT $start_row, " . ($end_row - $start_row + 1);
@@ -140,7 +140,11 @@
                                         </div>
                                         <div class='trand-right-cap'>
                                             <span class='color1'>{$row['title']}</span>
-                                            <h4><a href='detail_M.php'>{$row['content']}</a></h4>
+                                            <h4>
+                                                <a href='detail_M.php?post_id={$row['post_id']}'>
+                                                    {$row['content']}
+                                                </a>
+                                            </h4>
                                         </div>
                                     </div>
                                     ";
