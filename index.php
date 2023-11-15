@@ -44,9 +44,9 @@
                             <!-- <p>Rem ipsum dolor sit amet, consectetur adipisicing elit.</p> -->
                             <div class="trending-animated">
                                 <ul id="js-news" class="js-hidden">
-                                    <li class="news-item">Bangladesh dolor sit amet, consectetur adipisicing elit.</li>
-                                    <li class="news-item">Spondon IT sit amet, consectetur.......</li>
-                                    <li class="news-item">Rem ipsum dolor sit amet, consectetur adipisicing elit.</li>
+                                    <li class="news-item">Lũ tràn về TP Huế.</li>
+                                    <li class="news-item">Rạn nứt giữa tình báo Ukraine và phương Tây.</li>
+                                    <li class="news-item">Binh sĩ Israel tiến vào bệnh viện lớn nhất Gaza.</li>
                                 </ul>
                             </div>
                             
@@ -62,7 +62,7 @@
                                 <div class="trend-top-cap">
                                     <span>Appetizers</span>
                                     <h2>
-                                        <a href="detail_M.php">Welcome To The Best Model Winner<br> Contest At Look of the year</a>
+                                        <a href="detail_M.php">Blackpink tung video hậu trường concert ở Việt Nam</a>
                                     </h2>
                                 </div>
                             </div>

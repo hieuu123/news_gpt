@@ -374,8 +374,7 @@
                 }
 
                 // Tăng biến đếm ngay khi click nút Summarize 
-                summarizeCount++;
-
+                
                 const formId = event.target.getAttribute('sum-form-id');
                 const sumForm = document.getElementById(`sum-form-${formId}`);
                 const resultDiv = document.getElementById(`result-sum-${formId}`);
@@ -400,6 +399,7 @@
                         }
                     })
                     .then(data => {
+                        summarizeCount++;
                         // Xử lý dữ liệu trả về nếu cần
                         loadingSpinner.style.display = 'none'; //New
                         resultDiv.innerHTML = data;

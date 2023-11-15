@@ -190,7 +190,9 @@ if (isset($_GET["post_id"])) {
                                     <div class='col-md-8'>
                                 <?php
                                 // Truy vấn cơ sở dữ liệu để lấy các bình luận và sắp xếp theo thời gian gần nhất
-                                $postId = $_GET['post_id']; // Lấy post_id từ URL hoặc bất cứ cách nào phù hợp
+                                if (isset($_GET['post_id'])) {
+                                    $postId = $_GET['post_id']; 
+                                // Lấy post_id từ URL hoặc bất cứ cách nào phù hợp
                                 $commentQuery = "SELECT users.user_id, users.username, comments.created_at, comments.content, posts.post_id
                                                 FROM comments
                                                 INNER JOIN users ON comments.user_id = users.user_id
@@ -198,41 +200,46 @@ if (isset($_GET["post_id"])) {
                                                 WHERE comments.post_id = '$postId'
                                                 ORDER BY comments.created_at DESC";
                                 $commentResult = $conn->query($commentQuery);
-
-                                if ($commentResult->num_rows > 0) {
-                                    while ($comment = $commentResult->fetch_assoc()) {
-                                        echo "
-                                            <div class='card p-3 mt-2'>
-                                                <div class='comment d-flex justify-content-between align-items-center'>
-                                                    <div class='comment-info user d-flex flex-row align-items-center'>
-                                                        <strong class='user-info font-weight-bold text-primary'>
-                                                            {$comment['username']} 
-                                                        </strong>
-                                                        <small class='comment-content font-weight-bold'>
-                                                            {$comment['content']}
-                                                        </small>
+                                if ($commentResult !== false) {
+                                    if ($commentResult->num_rows > 0) {
+                                        while ($comment = $commentResult->fetch_assoc()) {
+                                            echo "
+                                                <div class='card p-3 mt-2'>
+                                                    <div class='comment d-flex justify-content-between align-items-center'>
+                                                        <div class='comment-info user d-flex flex-row align-items-center'>
+                                                            <strong class='user-info font-weight-bold text-primary'>
+                                                                {$comment['username']} 
+                                                            </strong>
+                                                            <small class='comment-content font-weight-bold'>
+                                                                {$comment['content']}
+                                                            </small>
+                                                        </div>
+                                                        <small class='date-info'>{$comment['created_at']}</small>
                                                     </div>
-                                                    <small class='date-info'>{$comment['created_at']}</small>
+                                                    <div class='action d-flex justify-content-between mt-2 align-items-center'>
+                                                        <div class='reply px-4'>
+                                                            <small>Remove</small>
+                                                            <span class='dots'></span>
+                                                            <small>Reply</small>
+                                                            <span class='dots'></span>
+                                                            <small>Translate</small>
+                                                        </div>
+                                                        <div class='icons align-items-center'>
+                                                            <i class='fa fa-star text-warning'></i>
+                                                            <i class='fa fa-check-circle-o check-icon'></i>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class='action d-flex justify-content-between mt-2 align-items-center'>
-                                                    <div class='reply px-4'>
-                                                        <small>Remove</small>
-                                                        <span class='dots'></span>
-                                                        <small>Reply</small>
-                                                        <span class='dots'></span>
-                                                        <small>Translate</small>
-                                                    </div>
-                                                    <div class='icons align-items-center'>
-                                                        <i class='fa fa-star text-warning'></i>
-                                                        <i class='fa fa-check-circle-o check-icon'></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ";
+                                            ";
+                                        }
+                                    } else {
+                                        echo "Chưa có bình luận nào.";
                                     }
                                 } else {
-                                    echo "Chưa có bình luận nào.";
-                                }                                
+                                    echo "Query execution failed.";
+                                }}
+                                else {
+                                    echo "Trang bị lỗi.";}          
                                 ?>
                             </div>
                             </div>
