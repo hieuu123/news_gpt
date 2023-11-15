@@ -19,14 +19,17 @@
         }
 
         .table {
-            table-layout: fixed; 
+            table-layout: fixed;
         }
 
         .link-column a {
-            word-wrap: break-word; /* Đảm bảo từ có thể xuống dòng */
-            word-break: break-all; /* Ngắt từ ở bất cứ điểm nào nếu cần */
-            max-width: 100%; /* Giới hạn độ rộng tối đa */
-    }
+            word-wrap: break-word;
+            /* Đảm bảo từ có thể xuống dòng */
+            word-break: break-all;
+            /* Ngắt từ ở bất cứ điểm nào nếu cần */
+            max-width: 100%;
+            /* Giới hạn độ rộng tối đa */
+        }
 
         .loading-spinner {
             display: none;
@@ -301,13 +304,23 @@
 
     <!-- Mã script xử lí tóm tắt nội dung bài viết từ các thẻ HTML lấy được -->
     <script>
-        let processedCount = 0; // Biến đếm toàn cục
+        let processedCount = 0; // Biến theo dõi số bài viết đã xử lý
+        let summarizeCount = 0; // Biến theo dõi số lần nút Summarize được click
 
         const s_buttons = document.querySelectorAll('.btn-sum-form');
 
         s_buttons.forEach((s_button) => {
             s_button.addEventListener('click', (event) => {
                 event.preventDefault();
+
+                // Thêm kiểm tra này
+                if (summarizeCount >= 3) {
+                    alert('Chỉ được phép tóm tắt tối đa 3 bài viết.');
+                    return; // Ngừng thực hiện các hành động tiếp theo
+                }
+
+                // Tăng biến đếm ngay khi click nút Summarize 
+                summarizeCount++;
 
                 const formId = event.target.getAttribute('sum-form-id');
                 const sumForm = document.getElementById(`sum-form-${formId}`);
