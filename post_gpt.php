@@ -151,7 +151,7 @@
 
                 if (!empty($firstTenResults)) {
                     echo '<table class="table">';
-                    echo '<thead><tr>
+                    echo '<thead class="thead-dark"><tr>
                         <th class = "col-2">Link</th>
                         <th class = "col-2">Actions</th>
                         <th class = "col-2">Result</th>
@@ -358,20 +358,13 @@
 
     <!-- Mã script xử lí tóm tắt nội dung bài viết từ các thẻ HTML lấy được -->
     <script>
-        let processedCount = 0; // Biến theo dõi số bài viết đã xử lý
-        let summarizeCount = 0; // Biến theo dõi số lần nút Summarize được click
+        let count = 0; // Biến theo dõi số lần nút Summarize được click
 
         const s_buttons = document.querySelectorAll('.btn-sum-form');
 
         s_buttons.forEach((s_button) => {
             s_button.addEventListener('click', (event) => {
                 event.preventDefault();
-
-                // Thêm kiểm tra này
-                if (summarizeCount >= 3) {
-                    alert('Chỉ được phép tóm tắt tối đa 3 bài viết.');
-                    return; // Ngừng thực hiện các hành động tiếp theo
-                }
 
                 // Tăng biến đếm ngay khi click nút Summarize 
                 
@@ -399,26 +392,18 @@
                         }
                     })
                     .then(data => {
-                        summarizeCount++;
-                        // Xử lý dữ liệu trả về nếu cần
-                        loadingSpinner.style.display = 'none'; //New
-                        resultDiv.innerHTML = data;
-
-                        document.getElementById('btn-rw').style.display = 'block';
-
-                        // const inputSumForm = document.getElementById(`input-rw-${formId}`);
-                        // inputSumForm.value = data;
-
-                        // Kiểm tra và cập nhật vào input-rw- chỉ khi processedCount < 3
-                        if (processedCount < 3) {
-                            processedCount++;
-                            document.getElementById(`input-rw-${processedCount}`).value = data;
-                        }
-
-                        // Hiển thị nút 'Submit' khi cần
-                        if (processedCount === 1) {
-                            document.getElementById('btn-rw').style.display = 'block';
-                        }
+                        count++;
+                            if (count >= 4) {
+                                alert('Chỉ được chọn tối đa 3 nguồn khác nhau.');
+                                loadingSpinner.style.display = 'none';
+                            } else {
+                                loadingSpinner.style.display = 'none';
+                                resultDiv.innerHTML = data;
+                                document.getElementById('btn-rw').style.display = 'block';
+                                const inputSumForm = document.getElementById(`result-sum-${formId}`);
+                                const inputRw = document.getElementById(`input-rw-${count}`);
+                                inputRw.value = inputSumForm.innerText;
+                            }
                     })
                     .catch(error => {
                         console.error(error);
