@@ -1,3 +1,4 @@
+<? session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,16 +178,6 @@ include "header.php";
 
 
 <body>
-  <script>
-    var check_1 = 0;
-  </script>
-  <form action="add_edit_categories.php" style="display: none;" method="post">
-    <input type="text" name="username" id="user">
-    <input type="text" name="password" id="pass">
-    <input type="text" name="roles" id="r">
-    <input type="text" name="check" id="c">
-    <input type="submit" id="dangnhap">
-  </form>
   <h1 style="text-align: center;">Add categories</h1>
   <div class="row d-flex justify-content-center">
     <div class="col-md-10">
@@ -197,22 +188,19 @@ include "header.php";
             /////
             $conn = new mysqli("localhost", "root", "", "cmsweb");
             if ($conn->connect_error) die($conn->connect_error);
-            if (isset($_POST['check'])) {
-              echo "<script>check_1 = 1;</script> ";
-            }
             $query = "SELECT * FROM users
           JOIN roles ON users.role_id = roles.role_id
           ORDER BY user_id ASC;";
             $result = $conn->query($query);
             $rows = $result->num_rows;
             if (
-              isset($_POST['roles']) &&
-              isset($_POST['username']) &&
-              isset($_POST['password'])
+              isset($_SESSION['roles']) &&
+              isset($_SESSION['username']) &&
+              isset($_SESSION['password'])
             ) {
-              $role_get = $_POST['roles'];
-              $username_get = $_POST['username'];
-              $password_get = $_POST['password'];
+              $role_get = $_SESSION['roles'];
+              $username_get = $_SESSION['username'];
+              $password_get = $_SESSION['password'];
               $query = "SELECT * FROM users
           JOIN roles ON users.role_id = roles.role_id
           ORDER BY user_id ASC;";
@@ -280,9 +268,9 @@ include "header.php";
           </form>
           <?php
           if (
-            isset($_POST['roles']) &&
-            isset($_POST['username']) &&
-            isset($_POST['password'])
+            isset($_SESSION['roles']) &&
+            isset($_SESSION['username']) &&
+            isset($_SESSION['password'])
           ) {
             if ($check == "admin") {
               echo '</div></div>
@@ -360,19 +348,6 @@ include "header.php";
       </div>
     </div>
   </div>
-  <script>
-    var username = document.getElementById('user');
-    var password = document.getElementById('pass');
-    var roles = document.getElementById('r');
-    document.getElementById('c').value = check_1;
-    username.value = localStorage.getItem('username');
-    password.value = localStorage.getItem('password');
-    roles.value = localStorage.getItem('role');
-    if (check_1 == 0) {
-      var check_button = document.getElementById('dangnhap');
-      check_button.click();
-    }
-  </script>
   <?php
   include 'index_footer.php';
   ?>

@@ -25,7 +25,7 @@
             sleep(2);
             echo '<script>
                   setTimeout(function() {
-                  window.location.href = "index.php";
+                    window.history.back();
                   }, 0); // Chuyển hướng sau 5 giây
                   </script>';
           }

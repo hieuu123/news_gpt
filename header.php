@@ -1,3 +1,8 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <style>
     .modal1 {
         display: none;
@@ -579,6 +584,11 @@
             localStorage.setItem('username', '');
             localStorage.setItem('password', '');
             localStorage.setItem('role', 'Đăng Nhập');
+            fetch('logout_process.php')
+            .then(function(response) {
+            })
+            .catch(function(error) {
+            });
             location.reload();
         }
         if (role !== null && role !== 'Đăng Nhập') {

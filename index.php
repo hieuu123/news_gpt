@@ -152,7 +152,7 @@
                                 </div>
                                 <div class='trand-right-cap'>
                                     <span class='color1'>Concert</span>
-                                    <h4><a href='detail_M.php'>{$row['title']}</a></h4>
+                                    <h4><a href='detail_M.php/?'>{$row['title']}</a></h4>
                                 </div>
                             </div>
                             

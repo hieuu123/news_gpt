@@ -200,12 +200,9 @@
                 echo "Không tìm thấy kết quả cho từ khóa '$query'.";
             }
         }
-
         // include('get_content.php');
-
         ?>
         <br>
-
         <!-- <div class="row text-center">
             <div class="col">
                 <div id="result-1"></div>
@@ -232,7 +229,6 @@
                     <input type="submit" value="Tóm tắt" class="btn btn-primary btn-sum-form" id="btn-sum-form-2" sum-form-id="2">
                 </form>
             </div>
-
             <div class="col">
                 <form action="" id="sum-form-3" class="sum-form">
                     <input type="text" name="content" id="input-sum-form-3" value="">
@@ -287,10 +283,14 @@
                 </div>
             </form>
             <br>
+            <form action="post_gpt_post.php" method="post">
             <div class="col" id="rw-result"></div>
+            <input type="hidden" id="gpt" name="gpt" value="ssssssssssss">
             <div class="col">
                 <div id="loading-spinner-rw" class="loading-spinner"></div>
+            <button type="submit" id="btn_gpt" style="display: none;">SUB</button>
             </div>
+            </form>
         </div>
     </div>
 
@@ -442,6 +442,11 @@
                     document.getElementById('loading-spinner-rw').style.display = 'none';
 
                     document.getElementById('rw-result').innerHTML = data;
+                    const gpt_form = document.getElementById(`gpt`);
+                    gpt_form.value = data;
+                    const btn_gpt = document.getElementById(`btn_gpt`);
+                    btn_gpt.click();
+                    
                 })
                 .catch(error => {
                     console.error(error);

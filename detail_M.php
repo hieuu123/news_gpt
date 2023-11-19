@@ -51,6 +51,9 @@
                     color: green;
                     cursor: pointer;
                 }     
+                .dai{
+                    width: 200%;
+                }
     </style>
 </head>
 <body>
@@ -191,7 +194,7 @@ if (isset($_GET["post_id"])) {
                                 <?php
                                 // Truy vấn cơ sở dữ liệu để lấy các bình luận và sắp xếp theo thời gian gần nhất
                                 if (isset($_GET['post_id'])) {
-                                    $postId = $_GET['post_id']; 
+                                $postId = $_GET['post_id']; 
                                 // Lấy post_id từ URL hoặc bất cứ cách nào phù hợp
                                 $commentQuery = "SELECT users.user_id, users.username, comments.created_at, comments.content, posts.post_id
                                                 FROM comments
@@ -204,7 +207,7 @@ if (isset($_GET["post_id"])) {
                                     if ($commentResult->num_rows > 0) {
                                         while ($comment = $commentResult->fetch_assoc()) {
                                             echo "
-                                                <div class='card p-3 mt-2'>
+                                                <div class='card p-3 mt-2 dai'>
                                                     <div class='comment d-flex justify-content-between align-items-center'>
                                                         <div class='comment-info user d-flex flex-row align-items-center'>
                                                             <strong class='user-info font-weight-bold text-primary'>

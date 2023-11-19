@@ -1,6 +1,6 @@
 <?php 
     $servername = "localhost";
-    $dbname = "news_gpt";
+    $dbname = "cmsweb";
     $username = "root";
     $password = "";
                     

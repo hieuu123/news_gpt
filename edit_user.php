@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -206,37 +207,10 @@ include "header.php";
             $result = $conn->query($query);
             $rows = $result->num_rows;
             if (
-              isset($_POST['roles']) &&
-              isset($_POST['username']) &&
-              isset($_POST['password'])
-            ) {
-              $role_get = $_POST['roles'];
-              $username_get = $_POST['username'];
-              $password_get = $_POST['password'];
-              $query = "SELECT * FROM users
-          JOIN roles ON users.role_id = roles.role_id
-          ORDER BY user_id ASC;";
-              $result = $conn->query($query);
-              $rows = $result->num_rows;
-              $check = "";
-              $conf = "";
-              for ($j = 0; $j < $rows; ++$j) {
-                $result->data_seek($j);
-                $row = $result->fetch_assoc();
-                $role = $row['role_name'];
-                $email = $row['username'];
-                $password = $row['password'];
-                if ($username_get === $email && $password_get === $password && $role_get === "Administrator") {
-                  $check = "admin";
-                  $conf = "1";
-                } else if ($role_get === $role && $username_get === $email && $password_get === $password) {
-                  $check = "user";
-                  $conf = "1";
-                } else if ($conf === "" && $check === "") {
-                  $check = "invalid <br>";
-                }
-              }
-              if ($check == "user" || $check == "admin") {
+              isset($_SESSION['roles']) &&
+              isset($_SESSION['username']) &&
+              isset($_SESSION['password']))
+              {
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
                   $row = $result->fetch_assoc();
@@ -245,7 +219,7 @@ include "header.php";
                   $password = $row['password'];
                   $email = $row['email'];
                   $role_name = $row['role_name'];
-                  if ($username_get === $username && $password_get === $password && $role_name === $role_get) {
+                  if ($_SESSION['username'] === $username && $_SESSION['password'] === $password && $_SESSION['roles'] === $role_name) {
                     echo '
                     <label for="user_id">ID</label><br><input type="text" name="user_id" placeholder="ID do not edit" value = "' . $user_id . '"> <br>
                     <label for="username">Username</label><br><input type="text" name="username" placeholder="Username" value = "' . $username . '"> <br>
@@ -253,35 +227,33 @@ include "header.php";
                     <label for="password">Password</label><br><input type="password" name="password" placeholder="Price e.g 01.00 $.." value = "' . $password . '"> <br>';
                   }
                 }
-              } else {
-                echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
               }
-              if ($check == "admin") {
-                $query = "SELECT * FROM roles;";
-                $result = $conn->query($query);
-                $rows = $result->num_rows;
-                echo '<label for="roles">Roles</label><br>
-                  <select name="roles">';
-                for ($j = 0; $j < $rows; ++$j) {
-                  $variable = $result->data_seek($j);
-                  $row = $result->fetch_assoc();
-                  $a = $row['role_id'];
-                  $b = $row['role_name'];
-                  echo '<option value="' . $a . '">' . $b . '</option>';
+              if (isset($_SESSION['roles'])) {
+                if ($_SESSION['roles'] == "Administrator") {
+                  $query = "SELECT * FROM roles;";
+                  $result = $conn->query($query);
+                  $rows = $result->num_rows;
+                  echo '<label for="roles">Roles</label><br>
+                    <select name="roles">';
+                  for ($j = 0; $j < $rows; ++$j) {
+                    $variable = $result->data_seek($j);
+                    $row = $result->fetch_assoc();
+                    $a = $row['role_id'];
+                    $b = $row['role_name'];
+                    echo '<option value="' . $a . '">' . $b . '</option>';
+                  }
+                  echo '</select><br>';echo '<input type="submit" value="Sửa user"></form>';
                 }
-                echo '</select><br>';
               }
-              echo '<input type="submit" value="Sửa user"></form>';
-            }
             ?>
           </form>
           <?php
           if (
-            isset($_POST['roles']) &&
-            isset($_POST['username']) &&
-            isset($_POST['password'])
+            isset($_SESSION['roles']) &&
+            isset($_SESSION['username']) &&
+            isset($_SESSION['password'])
           ) {
-            if ($check == "admin") {
+            if ($_SESSION == "admin") {
               echo '</div></div>
             <br>
             <h3>Sửa thông tin các tài khoản trong hệ thống</h3>
