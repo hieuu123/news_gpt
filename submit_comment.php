@@ -3,23 +3,56 @@
 // Kết nối đến cơ sở dữ liệu
 require_once "connectSql.php";
 session_start(); // Bắt đầu phiên session
-
+$user_id = 0;
 // Kiểm tra xem có dữ liệu được gửi từ form không
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Lấy dữ liệu từ form
     $postId = $_POST["post_id"];
-    $comment = $_POST["masage"];
+    $comment = $_POST["message"];
+    if (
+        isset($_SESSION['roles']) &&
+        isset($_SESSION['username']) &&
+        isset($_SESSION['password']) &&
+        isset($_POST['post_id'])
+    ) {
+        $role_get = $_SESSION['roles'];
+        $username_get = $_SESSION['username'];
+        $password_get = $_SESSION['password'];
+        $query = "SELECT * FROM users
+        JOIN roles ON users.role_id = roles.role_id
+        Where username = '$username_get'
+        ORDER BY user_id ASC";
+        $result = $conn->query($query);
+        $rows = $result->num_rows;
+        $result->data_seek($rows);
+        $row = $result->fetch_assoc();
+        $user_id = $row['user_id'];   
+        $query = "SELECT * FROM comments";
+        $result = $conn->query($query);
+        $rows = $result->num_rows;
+        $comment_id = 0;
+        for ($j = 0; $j < $rows; ++$j) {
+            $result->data_seek($j);
+            $row = $result->fetch_assoc();
+            $comment_id1 = $row['comment_id'];
+            if ($comment_id < $comment_id1) {
+                $comment_id = $comment_id1;
+            }}
+            $comment_id = $comment_id + 1;
 
-    // Lấy user_id từ session (đã lưu khi đăng nhập)
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+}
 
     // Kiểm tra xem user_id có tồn tại không
-    if ($user_id) {
+    if ($user_id !== 0) {
         // Thực hiện thao tác lưu comment vào cơ sở dữ liệu
-        $insertCommentSql = "INSERT INTO comments (post_id, user_id, content) VALUES ('$postId', '$user_id', '$comment')";
+        $insertCommentSql = "INSERT INTO comments (comment_id,post_id, user_id, content,created_at) VALUES ($comment_id,'$postId', '$user_id', '$comment',now())";
         if ($conn->query($insertCommentSql) === TRUE) {
             // Điều hướng người dùng trở lại trang hiển thị bài viết hoặc làm gì đó phù hợp
-            header("Location: detail_M.php");
+            echo('<script>
+            setTimeout(function() {
+              window.location.href = document.referrer;
+            }, 0); // Chuyển hướng sau 5 giây (5000 milliseconds)
+          </script>');
             exit();
         } else {
             echo "Lỗi: " . $insertCommentSql . "<br>" . $conn->error;

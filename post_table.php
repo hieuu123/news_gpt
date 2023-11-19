@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/hqn.css">
-
+    <script src="https://cdn.tiny.cloud/1/yvqguur5ckuiw9fm6hk55w3nul6u0bpodeo6an8iio5phdbz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 
@@ -283,7 +283,7 @@ include "header.php";
                     <input type="hidden" name="password" value="'.$password_get.'">
                     ';
                     echo '<td>
-                    <input class="mybtn" type="submit" value="Sửa">
+                    <input class="mybtn" type="submit" value="Sửa"></form>
                     <a id="update" href="post_del_process.php?post_id=' . $post_id . '&roles=' . $role_get . '&username=' . $username_get . '&password=' . $password_get . '">
                         <button type="button" class="mybtn" style="margin-left:10px;">Xóa</button>
                     </a>

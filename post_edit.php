@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/hqn.css">
-
+    <script src="https://cdn.tiny.cloud/1/yvqguur5ckuiw9fm6hk55w3nul6u0bpodeo6an8iio5phdbz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 
@@ -175,7 +175,20 @@
 <?php
 include "header.php";
 ?>
-
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    tinycomments_mode: 'embedded',
+    tinycomments_author: 'Author name',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+  });
+</script>
 
 <body>
     <h1 style="text-align: center;">Post Edit</h1>
@@ -196,7 +209,8 @@ include "header.php";
                         if (
                             isset($_SESSION['roles']) &&
                             isset($_SESSION['username']) &&
-                            isset($_SESSION['password'])
+                            isset($_SESSION['password']) &&
+                            isset($_POST['post_id'])
                         ) {
                             $role_get = $_SESSION['roles'];
                             $username_get = $_SESSION['username'];
@@ -237,7 +251,6 @@ include "header.php";
                                     $variable = $result->data_seek($j);
                                     $row = $result->fetch_assoc();
                                     if ($post_id == $row['post_id']) {
-                                        echo $post_id . '<br>';
                                         $post_id = $row['post_id'];
                                         $title = $row['title'];
                                         $content = $row['content'];
@@ -249,7 +262,7 @@ include "header.php";
                     <label for="user_id">User ID</label><br><input type="text" name="user_id" value="' . $user_id . '" readonly> <br>
                     <input type="text" name="post_id" value = "' . $post_id . '" style="display: none;" >
                     <label for="title">Title Post</label><br><input type="text" name="title" value="'.$title.'"> <br>
-                    <label for="content">Content</label><br><textarea name="content" rows="8" cols="50">'. htmlspecialchars($content) .'</textarea> <br>
+                    <label for="content">Content</label><br><textarea id="content" name="content" rows="8" cols="50">'. htmlspecialchars($content) .'</textarea> <br>
                     <label for="user_image">Ảnh cho bài báo</label><br>
                     <input type="file" name="user_image" id="user_image" accept="image/*" onchange="change()"><br>
                     <input type="text" name="image" style="display: none;" id="image" value="'.$image.'" >
@@ -281,6 +294,9 @@ include "header.php";
                                 echo '</select><br>';
                                 echo '<br></form>';
                             }
+                        }
+                        else {
+                            echo "Không tìm thấy bài đăng hợp lệ.";
                         }
                         ?>
                 </div>
