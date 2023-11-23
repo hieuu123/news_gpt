@@ -244,7 +244,11 @@ include "header.php";
                   }
                   echo '</select><br>';echo '<input type="submit" value="Sửa user"></form>';
                 }
+                else
+              {
+                echo '</select><br>';echo '<input type="submit" value="Sửa user"></form>';
               }
+              }           
             ?>
           </form>
           <?php
@@ -253,7 +257,7 @@ include "header.php";
             isset($_SESSION['username']) &&
             isset($_SESSION['password'])
           ) {
-            if ($_SESSION == "admin") {
+            if ($_SESSION['roles'] == "Administrator") {
               echo '</div></div>
             <br>
             <h3>Sửa thông tin các tài khoản trong hệ thống</h3>

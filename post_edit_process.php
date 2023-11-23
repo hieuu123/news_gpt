@@ -111,10 +111,10 @@
                       flush(); // Đẩy dữ liệu đến trình duyệt ngay lập tức
                       sleep(3);
                       echo '<script>
-                            setTimeout(function() {
-                              window.history.back();
-                            }, 0); // Chuyển hướng sau 5 giây
-                            </script>';
+                      setTimeout(function() {
+                        window.location.href = document.referrer;
+                      }, 0); // Chuyển hướng sau 5 giây (5000 milliseconds)
+                    </script>';
                   }
               }
 ?>

@@ -1,4 +1,4 @@
-//<?php // sqltest.php
+<?php // sqltest.php
     /*
           $conn = new mysqli("localhost", "root", "", "cmsweb");
           $query = "SELECT * FROM posts
@@ -55,7 +55,8 @@
                   </script>';
           }*/
     ?>
-<?php // sqltest.php
+<?php 
+// sqltest.php
 $conn = new mysqli("localhost", "root", "", "cmsweb");
 if ($conn->connect_error) die($conn->connect_error);
 $query = "SELECT * FROM users
@@ -73,7 +74,6 @@ if (
     $username_get = $_GET['username'];
     $password_get = $_GET['password'];
     $post_id = $_GET['post_id'];
-    echo 'hi'; 
     $query = "SELECT * FROM users
 JOIN roles ON users.role_id = roles.role_id
 ORDER BY user_id ASC;";
@@ -97,22 +97,29 @@ ORDER BY user_id ASC;";
     $query = "SELECT * FROM posts WHERE user_id = $user_id AND post_id = $post_id";
     $result = $conn->query($query);
     $rows = $result->num_rows;
-
+    if ($role_get == "Administrator" || $check == "user") {
+      $query = "SELECT * FROM posts WHERE post_id = $post_id";
+    $result = $conn->query($query);
+    $rows = $result->num_rows;
+    }
     if ($rows > 0) {
         $deleteQuery = "DELETE FROM posts WHERE user_id = $user_id AND post_id = $post_id";
+        if ($role_get == "Administrator" || $check == "user") {
+          $deleteQuery = "DELETE FROM posts WHERE post_id = $post_id";
+        }
         $deleteResult = $conn->query($deleteQuery);
 
         if ($deleteResult) {
-            echo "Xóa dữ liệu thành công";
-            echo 'Đăng bài viết lên cơ sở dữ liệu thành công.';
+            echo "Xóa dữ liệu thành công<br>";
+            echo 'Đăng bài viết lên cơ sở dữ liệu thàenh công.';
         ob_flush(); // Xóa bộ nhớ đệm
         flush(); // Đẩy dữ liệu đến trình duyệt ngay lập tức
         sleep(3);
         echo '<script>
-                            setTimeout(function() {
-                              window.history.back();
-                            }, 0); // Chuyển hướng sau 5 giây
-                            </script>';
+        setTimeout(function() {
+          window.location.href = document.referrer;
+        }, 0); // Chuyển hướng sau 5 giây (5000 milliseconds)
+      </script>';
         } else {
             echo "Lỗi khi xóa dữ liệu";
         }}}

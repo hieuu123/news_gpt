@@ -257,13 +257,13 @@ include "header.php";
                 }
                 echo '</select><br>';
                 echo '<input type="submit" value="Add category">';
-                echo '<br></form>';
-              } else {
-                echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
-                echo '</select><br>';
-                echo '<br></form>';
-              }
+                echo '<br></form>';}
             }
+          else {
+            echo "Bạn chưa đăng nhập hoặc phiên đăng nhập của bạn chưa hợp lệ";
+            echo '</select><br>';
+            echo '<br></form>';
+          }
             ?>
           </form>
           <?php
@@ -317,15 +317,16 @@ include "header.php";
                   $a = $rowGroup['groupcategory_id'];
                   $b = $rowGroup['groupcategory_name'];
 
+
                   if ($groupcategory_id == $a) {
                     echo '<option value="' . $a . '" selected>' . $b . '</option>';
                   } else {
                     echo '<option value="' . $a . '">' . $b . '</option>';
                   }
                 }
-
                 echo '</select></td><td><input type="submit" value="Sửa"></td>
-                <td><a id="update" href="chucnang/add_delete_process.php?category_id=' . $category_id . '&"><button type="button" class="btn-primary">Xóa</button></a></td>
+                <td><a id="update" href="chucnang/add_delete_process.php?category_id=' . $category_id . '&">
+                <button type="button" class="btn-primary">Xóa</button></a></td>
                 </tr></form>';
               }
               echo '</table>';

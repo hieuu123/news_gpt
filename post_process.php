@@ -101,7 +101,8 @@
                   $category_id = $_POST['category_id'];
               
                   // Prepare the statement
-                  $stmt = $conn->prepare("INSERT INTO `posts`(`post_id`, `title`, `content`, `user_id`, `category_id`, `created_at`, `image`) VALUES (?, ?, ?, ?, ?, now(), ?)");
+                  $stmt = $conn->prepare("INSERT INTO `posts`(`post_id`, `title`, `content`, `user_id`, `category_id`, `created_at`, `image`) 
+                  VALUES (?, ?, ?, ?, ?, now(), ?)");
               
                   // Bind the values to the statement
                   $stmt->bind_param("isssis", $post_id, $title, $content, $user_id, $category_id, $image);
@@ -117,10 +118,10 @@
                       flush(); // Đẩy dữ liệu đến trình duyệt ngay lập tức
                       sleep(3);
                       echo '<script>
-                            setTimeout(function() {
-                              window.history.back();
-                            }, 0); // Chuyển hướng sau 5 giây
-                            </script>';
+                      setTimeout(function() {
+                        window.location.href = document.referrer;
+                      }, 0); // Chuyển hướng sau 5 giây (5000 milliseconds)
+                    </script';
                   }
               }
 ?>

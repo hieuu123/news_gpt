@@ -220,6 +220,7 @@ include "header.php";
           ORDER BY user_id ASC;";
                             $result = $conn->query($query);
                             $rows = $result->num_rows;
+                            echo $_POST['post_id'];
                             $check = "";
                             $conf = "";
                             $user_id = "";
@@ -246,11 +247,12 @@ include "header.php";
                           ORDER BY post_id ASC;";
                                 $result = $conn->query($query);
                                 $rows = $result->num_rows;
-                                $post_id = $_POST['post_id'];
+                                $post_id1 = $_POST['post_id'];
+                                echo $post_id1;
                                 for ($j = 0; $j < $rows; ++$j) {
                                     $variable = $result->data_seek($j);
                                     $row = $result->fetch_assoc();
-                                    if ($post_id == $row['post_id']) {
+                                    if ($post_id1 === $row['post_id']) {
                                         $post_id = $row['post_id'];
                                         $title = $row['title'];
                                         $content = $row['content'];

@@ -1,6 +1,6 @@
 <?php
 set_time_limit(1200);
-$api_key = 'sk-cHLV1WaQOPbSQLqkf5E3T3BlbkFJntAmfiSP8k6iyry1i9pk1';
+$api_key = 'sk-cHLV1WaQOPbSQLqkf5E3T3BlbkFJntAmfiSP8k6iyry1i9pk12';
 
 $endpoint = 'https://api.openai.com/v1/chat/completions';
 $output = '';
