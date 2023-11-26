@@ -83,7 +83,7 @@
                                             <div class='col-lg-4'>
                                                 <div class='single-bottom mb-35'>
                                                     <div class='trend-bottom-img mb-30'>
-                                                        <img src='https://i1-vnexpress.vnecdn.net/2023/10/16/gaza-ap-1697432073-6382-169743-8460-6988-1697451110.jpg?w=680&h=408&q=100&dpr=1&fit=crop&s=dQuZj1nopU7n3OL0pjUecg' alt='posts'>
+                                                        <img src='{$row["image"]}' alt='posts'>
                                                     </div>
                                                     <div class='trend-bottom-cap'>
                                                         <span class='color2'>Sports</span>
@@ -148,11 +148,11 @@
                             
                             <div class='trand-right-single d-flex'>
                                 <div class='trand-right-img'>
-                                    <img src='assets/img/trending/right1.jpg' alt=''>
+                                    <img src='{$row['image']}' alt='' style='width: 100%; height: auto;'>
                                 </div>
                                 <div class='trand-right-cap'>
                                     <span class='color1'>Concert</span>
-                                    <h4><a href='detail_M.php/?'>{$row['title']}</a></h4>
+                                    <h4><a href='detail_M.php?post_id={$row['post_id']}'>{$row['title']}</a></h4>
                                 </div>
                             </div>
                             

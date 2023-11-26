@@ -86,6 +86,9 @@
         .form_sl {
             width: 50%;
         }
+        .nutxephang{
+            height: 15px;
+        }
     </style>
     </head>
 
@@ -95,39 +98,21 @@
 
             <form action="" method="post">
                 <div class="form-group">
-                    <input type="text" name="tukhoa" class="form-control" placeholder="Nhập từ khóa...">
+                    <input type="hidden" name="theoview" class="form-control">
                 </div>
-                <div class="form-group form_date">
-                    <label for="ngaytruoc">Từ ngày</label><input type="date" class="form-control" name="ngaytruoc" id="NgaySinh">
-                    <label for="ngaysau">Đến ngày</label><input type="date" class="form-control" name="ngaysau" id="NgaySinh">
+                <button type="submit" class="btn btn-primary nutxephang">Tìm kiếm</button>
+            </form>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="theoview" class="form-control">
                 </div>
-                <div class="form-group form_sl">
-                    <label for="user_id">Tác giả:</label><br>
-                    <select name="user_id">
-                        <option value="-1">Tất cả</option>
-                        <?php
-                        $query = "SELECT * FROM posts JOIN categories ON posts.category_id = categories.category_id JOIN users ON posts.user_id = users.user_id";
-                        $result = $conn->query($query);
-                        $rows = $result->num_rows;
-
-                        $userNames = array(); // Mảng để lưu trữ các tên người dùng đã xuất hiện
-
-                        for ($j = 0; $j < $rows; ++$j) {
-                            $variable = $result->data_seek($j);
-                            $row = $result->fetch_assoc();
-                            $a = $row['user_id'];
-                            $b = $row['username'];
-
-                            // Kiểm tra xem tên người dùng đã xuất hiện trước đó chưa
-                            if (!in_array($b, $userNames)) {
-                                echo '<option value="' . $a . '">' . $b . '</option>';
-                                $userNames[] = $b; // Thêm tên người dùng vào mảng
-                            }
-                        }
-                        ?>
-                    </select>
-                </div><br><br><br>
-                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                <button type="submit" class="btn btn-primary nutxephang">Tìm kiếm</button>
+            </form>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="hidden" name="theoview" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary nutxephang">Tìm kiếm</button>
             </form>
 
             <?php

@@ -99,14 +99,17 @@ include_once("connectSql.php");
 
 if (isset($_GET["post_id"])) {
     $post_id = $_GET["post_id"];
-    $sql = "SELECT title, content, category_id FROM posts WHERE post_id = $post_id";
+    $sql = "SELECT * FROM posts WHERE post_id = $post_id";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 ?>
                                 <div class="about-img">
-                                    <img src="assets/img/trending/trending_top.jpg" alt="">
+                                    <?php
+                                        $image = $row["image"];
+                                        echo '<img src="'.$image.'" alt="">';
+                                    ?>
                                 </div>
                                 <div class="section-tittle mb-30 pt-30">
                                     <h1 style=""><?php echo $row["title"]; ?></h1>
@@ -135,6 +138,7 @@ if (isset($_GET["post_id"])) {
                                 </div>
                             </div>
                             <!-- From -->
+                            <?php include ('star.php') ?>
                             <div class="row">
                                 <div class="col-lg-8">
                                     <form class="form-contact contact_form mb-80" action="submit_comment.php" method="post">

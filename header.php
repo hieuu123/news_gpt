@@ -345,8 +345,8 @@ if (session_status() == PHP_SESSION_NONE) {
                                 <div class="header-right-btn f-right d-none d-lg-block">
                                     <i class="fas fa-search special-tag"></i>
                                     <div class="search-box">
-                                        <form action="#">
-                                            <input type="text" placeholder="Search">
+                                        <form action="search.php" method="post">
+                                            <input type="text" name="tukhoa" placeholder="Search" >
                                         </form>
                                     </div>
                                 </div>
@@ -369,8 +369,7 @@ if (session_status() == PHP_SESSION_NONE) {
         });
         var role = localStorage.getItem('role');
         document.getElementById('loginBtn').value = role;
-        console.log(role);
-        if (role !== null && role !== undefined) {
+        if (role !== null && role !== undefined && role.length <= 255) {
             loginBtn.textContent = role;
         }
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
@@ -583,7 +582,7 @@ if (session_status() == PHP_SESSION_NONE) {
         function logout() {
             localStorage.setItem('username', '');
             localStorage.setItem('password', '');
-            localStorage.setItem('role', 'Đăng Nhập');
+            localStorage.removeItem('role');
             fetch('logout_process.php')
             .then(function(response) {
             })
