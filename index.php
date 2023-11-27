@@ -25,6 +25,23 @@
 
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
+    <style>
+    .trand-right-img{
+        width: 120px;
+        height: 100px;
+    }
+    .trend-bottom-img{
+        width: 236.67px;
+        height: 157.78px;
+        
+    }
+    .text-hidden{
+        width: 236.67px; /* Kích thước của div container */
+        white-space: nowrap; /* Ngăn các từ bị ngắt dòng */
+        overflow: hidden; /* Ẩn nội dung vượt quá kích thước */
+        text-overflow: ellipsis; /* Hiển thị dấu ba chấm khi nội dung bị ẩn */
+    }
+    </style>
 </head>
 <body>
     <?php
@@ -83,11 +100,11 @@
                                             <div class='col-lg-4'>
                                                 <div class='single-bottom mb-35'>
                                                     <div class='trend-bottom-img mb-30'>
-                                                        <img src='{$row["image"]}' alt='posts'>
+                                                        <img src='{$row["image"]}' alt='posts' style='width: 100%; height: 100%;' >
                                                     </div>
                                                     <div class='trend-bottom-cap'>
                                                         <span class='color2'>Sports</span>
-                                                        <h4><h4><a href='detail_M.php'>{$row["title"]}</a></h4></h4>
+                                                        <h4 class='text-hidden'><a href='detail_M.php'>{$row["title"]}</a></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -148,11 +165,11 @@
                             
                             <div class='trand-right-single d-flex'>
                                 <div class='trand-right-img'>
-                                    <img src='{$row['image']}' alt='' style='width: 100%; height: auto;'>
+                                    <img src='{$row['image']}' alt='' style='width: 120px; height: 100%;'>
                                 </div>
                                 <div class='trand-right-cap'>
-                                    <span class='color1'>Concert</span>
-                                    <h4><a href='detail_M.php?post_id={$row['post_id']}'>{$row['title']}</a></h4>
+                                    <span class='color1'>News</span>
+                                    <h4 class='text-hidden'><a href='detail_M.php?post_id={$row['post_id']}'>{$row['title']}</a></h4>
                                 </div>
                             </div>
                             

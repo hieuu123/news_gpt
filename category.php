@@ -26,6 +26,29 @@
 
         <!-- Fontawesome -->
             <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
+<style>
+    .trand-right-img{
+        width: 120px;
+        height: 100px;
+    }
+    .trend-bottom-img{
+        width: 236.67px;
+        height: 157.78px;
+        
+    }
+    
+    .text-hidden {
+        max-width: 236.67px; /* Kích thước tối đa của div container */
+        /* overflow: hidden; Ẩn nội dung vượt quá kích thước */
+        /* white-space: nowrap; Ngăn các từ bị ngắt dòng */
+        /* text-overflow: ellipsis; Hiển thị dấu ba chấm khi nội dung bị ẩn */
+        /* display: block; Thay đổi display thành block */
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* Số dòng tối đa hiển thị */
+        -webkit-box-orient: vertical;
+    }
+</style>
 </head>
 <body>
 <main>
@@ -88,11 +111,12 @@
                                             <div class='col-lg-4'>
                                                 <div class='single-bottom mb-35'>
                                                     <div class='trend-bottom-img mb-30'>
-                                                        <img src='{$row['image']}' alt='Hinh Anh'>
+                                                        <img src='{$row['image']}' alt='posts' style='width: 100%; height: 100%;'>
                                                     </div>
                                                     <div class='trend-bottom-cap'>
-                                                        <span class='color2'>{$row['title']}</span>
-                                                        <h4><a href='detail_M.php?post_id={$row['post_id']}'>{$row['content']}</a></h4>
+                                                        <a class='text-hidden' href='detail_M.php?post_id={$row['post_id']}'>
+                                                            <span class='color2 text-hidden'>{$row['title']}</span>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,9 +163,11 @@
                                             <img src='{$row['image']}' alt='hinh anh'>
                                         </div>
                                         <div class='trand-right-cap'>
+                                        <a class ='text-hidden' href='detail_M.php?post_id={$row['post_id']}'>
                                             <span class='color1'>{$row['title']}</span>
+                                            </a>
                                             <h4>
-                                                <a href='detail_M.php?post_id={$row['post_id']}'>
+                                                <a class ='text-hidden' href='detail_M.php?post_id={$row['post_id']}'>
                                                     {$row['content']}
                                                 </a>
                                             </h4>
@@ -176,44 +202,54 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <div class='weekly2-news-active dot-style d-flex dot-style'>
-                    <?php 
-                    require_once "connectSql.php";
-                    if(isset($_GET["category_id"])){
-                        $category_id = $_GET["category_id"];
+    <div class="col-12">
+        <div class='weekly2-news-active dot-style d-flex dot-style'>
+            <?php 
+            require_once "connectSql.php";
+            if(isset($_GET["category_id"])){
+                $category_id = $_GET["category_id"];
 
-                        $sql = "SELECT posts.*, categories.category_id
-                                FROM posts inner join categories on posts.category_id = categories.category_id
-                                Where posts.category_id = $category_id
-                                Order by posts.created_at DESC
-                                LIMIT 5";
-                        $result = $conn->query($sql);
-                        if($result->num_rows > 0){
-                            while ($row = $result->fetch_assoc()){
-                                echo "
-                                    <div class='weekly2-single'>
-                                        <div class='weekly2-img'>
-                                            <img src='assets/img/news/weekly2News1.jpg' alt='Hinh Anh'>
-                                        </div>
-                                        <div class='weekly2-caption'>
-                                            <span class='color1'>{$row['title']}</span>
-                                            <p>25 Jan 2020</p>
-                                            <h4><a href='#'>{$row['content']}</a></h4>
-                                        </div>
-                                    </div>
-                                    
-                                ";
-                            }
-                        } else {
-                            echo "khong co bai viet thuoc category nay !!";
-                        }
-                    } else {
-                        echo "This category is not found!!";
+                $sql = "SELECT posts.*, categories.category_id
+                        FROM posts INNER JOIN categories ON posts.category_id = categories.category_id
+                        WHERE posts.category_id = ?
+                        ORDER BY posts.created_at DESC
+                        LIMIT 5";
+
+                // Sử dụng Prepared Statements để bảo vệ mã của bạn khỏi SQL injection
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("i", $category_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if($result->num_rows > 0){
+                    while ($row = $result->fetch_assoc()){
+                        // Format ngày tháng
+                        $formattedDate = date("d M Y", strtotime($row['created_at']));
+
+                        // Hiển thị một phần nội dung và liên kết đến trang chi tiết
+                        echo "
+                            <div class='weekly2-single'>
+                                <div class='weekly2-img'>
+                                    <img src='assets/img/news/weekly2News1.jpg' alt='Hinh Anh'>
+                                </div>
+                                <div class='weekly2-caption'>
+                                    <span class='color1'>{$row['title']}</span>
+                                    <p>{$formattedDate}</p>
+                                    <h4><a href='detail_M.php?post_id={$row['post_id']}'>Read More</a></h4>
+                                </div>
+                            </div>
+                        ";
                     }
-                    ?>
-                    
-                </div> 
+                } else {
+                    echo "Không có bài viết thuộc category này!!";
+                }
+            } else {
+                echo "This category is not found!!";
+            }
+            ?>
+        </div>
+    </div>
+</div>
             </div> <!-- row-->
         </div>
     </div>           

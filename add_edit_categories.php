@@ -36,6 +36,7 @@
   #post {
     flex-direction: column;
     align-items: center;
+    width: 600px;
   }
 
   label {
@@ -171,6 +172,11 @@
     padding: 5px;
     box-sizing: border-box;
   }
+  #edit-category{
+    width: 1000px;
+    padding: 20px;
+  
+  }
 </style>
 <?php
 include "header.php";
@@ -240,13 +246,13 @@ include "header.php";
                 }
                 $category_id = $category_id + 1;
                 echo '
-                    <input type="text" name="category_id" value = "' . $category_id . '" style="display: none;" >
-                    <label for="category_name">Category Name</label><br><input type="text" name="category_name"> <br>
-                    <label for="description">Description</label><br><input type="text" name="description" > <br>';
+                    <input class="form-control" type="text" name="category_id" value = "' . $category_id . '" style="display: none;" >
+                    <label class="form-label" for="category_name">Category Name</label><br><input type="text" name="category_name"> <br>
+                    <label class="form-label" for="description">Description</label><br><input type="text" name="description" > <br>';
                 $query = "SELECT * FROM groupcategories;";
                 $result = $conn->query($query);
                 $rows = $result->num_rows;
-                echo '<label for="groupcategories">Groupcategories</label><br>
+                echo '<label class="form-label" for="groupcategories">Groupcategories</label><br>
                     <select name="groupcategory_id">';
                 for ($j = 0; $j < $rows; ++$j) {
                   $variable = $result->data_seek($j);
@@ -255,8 +261,8 @@ include "header.php";
                   $b = $row['groupcategory_name'];
                   echo '<option value="' . $a . '">' . $b . '</option>';
                 }
-                echo '</select><br>';
-                echo '<input type="submit" value="Add category">';
+                echo '</select><br><br>';
+                echo '<input class"btn" type="submit" value="Add category">';
                 echo '<br></form>';}
             }
           else {
@@ -273,9 +279,11 @@ include "header.php";
             isset($_SESSION['password'])
           ) {
             if ($check == "admin") {
-              echo '</div></div>
-            <h3>Chỉnh sửa các Category</h3>
+              echo '</div></div><hr>
+            <div id = "edit-category"> 
+            <span><h3>Chỉnh sửa các Category</h3>
             <input type="submit" onclick="openPopup()" value="Edit Categories" align="center">
+            </div>
             <div class="overlay" id="overlay">
               <div class="popup">
                 <span class="close-button" onclick="closePopup()">&times;</span>

@@ -124,6 +124,29 @@ if (session_status() == PHP_SESSION_NONE) {
     .dropdown-menu1.active {
         display: block;
     }
+    .content1 {
+        width: 30%;
+        margin: 20px auto;
+    }
+    .modal-content2 {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 30%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+    margin: 20px  auto;
+    background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 5%;
+  }
 </style>
 <body>
     <header>
@@ -181,10 +204,10 @@ if (session_status() == PHP_SESSION_NONE) {
                                                 <span class="close">&times;</span>
                                                 <h2>Login</h2>
                                                 <form id="login">
-                                                    <label for="username">Username:</label>
-                                                    <input type="text" id="username" required>
-                                                    <label for="password">Password:</label>
-                                                    <input type="password" id="password" required><br><br>
+                                                    <label class="form-label" for="username">Username:</label>
+                                                    <input class="form-control" type="text" id="username" required>
+                                                    <label class="form-label" for="password">Password:</label>
+                                                    <input class="form-control" type="password" id="password" required><br><br>
                                                     <button type="submit" class="btn btn-outline-dark">Login</button>
                                                 </form>
                                             </div>
@@ -193,23 +216,23 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <!-- Modal -->
                                         <!-- Modal -->
                                         <div id="myModal" class="modal">
-                                            <div class="modal-content">
+                                            <div class="modal-content2">
                                                 <span class="close" onclick="closeModal()">&times;</span>
                                                 <h2>Đăng ký</h2>
                                                 <form id="formsignup">
-                                                    <label for="username">Tên người dùng:</label><br>
-                                                    <input type="text" id="username_signup" name="username"><br><br>
+                                                    <label class="form-label" for="username">Tên người dùng:</label><br>
+                                                    <input class="form-control" type="text" id="username_signup" name="username"><br><br>
 
-                                                    <label for="email">Email:</label><br>
-                                                    <input type="email" id="email_signup" name="email"><br><br>
+                                                    <label class="form-label" for="email">Email:</label><br>
+                                                    <input class="form-control" type="email" id="email_signup" name="email"><br><br>
 
-                                                    <label for="password">Mật khẩu:</label><br>
-                                                    <input type="password" id="password_signup" name="password"><br><br>
+                                                    <label class="form-label" for="password">Mật khẩu:</label><br>
+                                                    <input class="form-control" type="password" id="password_signup" name="password"><br><br>
 
-                                                    <label for="password_signup1">Nhập lại mật khẩu:</label><br>
-                                                    <input type="password" id="password_signup_verify" name="repeat-password"><br><br>
+                                                    <label class="form-label" for="password_signup1">Nhập lại mật khẩu:</label><br>
+                                                    <input class="form-control" type="password" id="password_signup_verify" name="repeat-password"><br><br>
 
-                                                    <input type="submit" value="Đăng ký">
+                                                    <input class="btn btn-danger" type="submit" value="Đăng ký">
                                                 </form>
                                             </div>
                                         </div>

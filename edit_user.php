@@ -221,10 +221,10 @@ include "header.php";
                   $role_name = $row['role_name'];
                   if ($_SESSION['username'] === $username && $_SESSION['password'] === $password && $_SESSION['roles'] === $role_name) {
                     echo '
-                    <label for="user_id">ID</label><br><input type="text" name="user_id" placeholder="ID do not edit" value = "' . $user_id . '"> <br>
-                    <label for="username">Username</label><br><input type="text" name="username" placeholder="Username" value = "' . $username . '"> <br>
-                    <label for="email">Email</label><br><input type="text" name="email" placeholder="Email" value = "' . $email . '"> <br>
-                    <label for="password">Password</label><br><input type="password" name="password" placeholder="Price e.g 01.00 $.." value = "' . $password . '"> <br>';
+                    <label class="form-label" for="user_id">ID</label><br><input class="form-control" type="text" name="user_id" placeholder="ID do not edit" value = "' . $user_id . '"> <br>
+                    <label class="form-label" for="username">Username</label><br><input class="form-control" type="text" name="username" placeholder="Username" value = "' . $username . '"> <br>
+                    <label class="form-label" for="email">Email</label><br><input class="form-control" type="text" name="email" placeholder="Email" value = "' . $email . '"> <br>
+                    <label class="form-label" for="password">Password</label><br><input class="form-control" type="password" name="password" placeholder="Price e.g 01.00 $.." value = "' . $password . '"> <br>';
                   }
                 }
               }
