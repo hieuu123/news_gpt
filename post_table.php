@@ -271,7 +271,8 @@ include "header.php";
                     ';
                     echo '<td>
                     <input class="mybtn" type="submit" value="Sửa">
-                    <a id="update" href="post_del_process.php?post_id=' . $post_id . '&roles=' . $role_get . '&username=' . $username_get . '&password=' . $password_get . '">
+                    <a id="update" href="post_del_process.php?post_id=' . $post_id . '&roles=' . $role_get . 
+                    '&username=' . $username_get . '&password=' . $password_get . '">
                         <button type="button" class="mybtn" style="margin-left:10px;">Xóa</button>
                     </a>
                     </form>

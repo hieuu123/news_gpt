@@ -259,6 +259,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                             //     }
                                             // }        
                                             ?>
+                                            <li><a href='bangxephang.php'>Bảng xếp hạng</a></li>
                                             <li>
                                                 <i class="fa-solid fa-bars" style="color: #fc3f00;"></i>
                                                 <ul class="submenu">
