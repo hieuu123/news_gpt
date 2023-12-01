@@ -260,7 +260,7 @@ if (session_status() == PHP_SESSION_NONE) {
                                         <?php
                                         require_once "connectSql.php";
                                         $sql = "SELECT categories.*
-                                                        From categories where  category_id <= '7'";
+                                                        From categories where  category_id <= '6'";
                                         $result = $conn->query($sql);
                                         ?>
 
