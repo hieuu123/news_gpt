@@ -144,8 +144,8 @@
                             <hr style="width:100%; background-color: #002e5b; height: 2px; border: none;">
                         </div>
                         <div class="text-right">
-                            <a href="#">Điều khoản sử dụng</a>
-                            <a href="#" style="margin-left:20px">Chính sách bảo mật</a>
+                            <a href="terms.php">Điều khoản sử dụng</a>
+                            <a href="policy.php" style="margin-left:20px">Chính sách bảo mật</a>
                         </div>
                     </div>
                     <!-- <div class="col-xl-3 col-lg-3 col-md-4  col-sm-6">
