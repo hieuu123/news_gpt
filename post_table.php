@@ -353,7 +353,7 @@ include "header.php";
         }
     </script>
     <?php
-    include 'index_footer.php';
+    include 'footer.php';
     ?>
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

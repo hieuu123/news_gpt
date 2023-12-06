@@ -99,6 +99,10 @@
   label {
     margin-top: 15px;
   }
+  .minwidth
+{
+    min-height: 500px;
+}
 </style>
 <style>
   body {
@@ -186,7 +190,7 @@ include "header.php";
 <body>
   <h1 style="text-align: center;">Add categories</h1>
   <div class="row d-flex justify-content-center">
-    <div class="col-md-10">
+    <div class="col-md-10 minwidth">
       <div class="card" id="forn">
         <div class="row">
           <form action="chucnang/add_categories_process.php" method="post" id="post">
@@ -358,7 +362,7 @@ include "header.php";
     </div>
   </div>
   <?php
-  include 'index_footer.php';
+  include 'footer.php';
   ?>
   <!-- All JS Custom Plugins Link Here here -->
   <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
