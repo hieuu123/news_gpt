@@ -57,18 +57,6 @@
 ?>
 <?php // sqltest.php
           if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $file = $_FILES['content'];
-            
-            $uploadDir = 'luutru/';
-            $targetFile = $uploadDir . basename($file['name']);
-            
-            if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-              echo 'Tệp tin đã được tải lên thành công.';
-            } else {
-              echo 'Đã xảy ra lỗi khi tải lên tệp tin.';
-            }
-          }
-          if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file = $_FILES['user_image'];
             
             $uploadDir = 'luutru/';
@@ -98,18 +86,21 @@
                   isset($_POST['user_id']) &&
                   isset($_POST['title']) &&
                   isset($_POST['content']) &&
-                  isset($_POST['image']) &&
                   isset($_POST['category_id']) &&
                   $_POST['user_id'] != "" &&
                   $_POST['title'] != "" &&
                   $_POST['content'] != "" &&
-                  $_POST['image'] != "" &&
                   $_POST['category_id'] != ""
               ) {
                   $user_id = $_POST['user_id'];
                   $title = $_POST['title'];
                   $content = $_POST['content'];
-                  $image = $_POST['image'];
+                  if (isset($_POST['image']) && $_POST['image'] != "") {
+                    $image = $_POST['image'];
+                  }
+                  else {
+                    $image = "";
+                  }
                   $category_id = $_POST['category_id'];
               
                   // Prepare the statement

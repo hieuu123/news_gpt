@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/hqn.css">
-    <script src="https://cdn.tiny.cloud/1/yvqguur5ckuiw9fm6hk55w3nul6u0bpodeo6an8iio5phdbz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/xha7kgjgvi76awm0zw58atpp5oa38yym1efx2fkxuhxgslx0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Fontawesome -->
     <script src="https://kit.fontawesome.com/d3b4b6d594.js" crossorigin="anonymous"></script>
 
