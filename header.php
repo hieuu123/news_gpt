@@ -196,6 +196,8 @@ if (session_status() == PHP_SESSION_NONE) {
                                             <ul class="dropdown-menu1">
                                                 <li id="account"><a href="#">Chỉnh sửa thông tin</a></li>
                                                 <li><a href="add_edit_categories.php">Quản lý danh mục</a></li>
+                                                <li><a href="history.php">Lịch sử xem</a></li>
+                                                <br>
                                                 <li id="logout" onclick="logout()"><a href="#">Đăng xuất</a></li>
                                             </ul>
                                         </li>

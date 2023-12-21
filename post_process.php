@@ -63,9 +63,9 @@
             $targetFile = $uploadDir . basename($file['name']);
             
             if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-              echo 'Tệp tin đã được tải lên thành công.';
+              echo 'Hình ảnh đã được tải lên thành công.';
             } else {
-              echo 'Đã xảy ra lỗi khi tải lên tệp tin.';
+              echo 'Đã xảy ra lỗi khi tải lên hình ảnh.';
             }
           }
           $conn = new mysqli("localhost", "root", "", "cmsweb");
