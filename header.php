@@ -397,7 +397,7 @@ if (session_status() == PHP_SESSION_NONE) {
         var username = localStorage.getItem('username');
         document.getElementById('loginBtn').value = username;
         if (username !== null && username !== undefined && username.length <= 255) {
-            loginBtn.textContent = role;
+            loginBtn.textContent = username;
         }
         document.getElementsByClassName('close')[0].addEventListener('click', function() {
             document.getElementById('modal').style.display = 'none';
@@ -620,7 +620,7 @@ if (session_status() == PHP_SESSION_NONE) {
         var role1 = localStorage.getItem('role');
         if (username !== null && username !== 'Đăng Nhập') {
             document.getElementById('nut1').style.display = 'none';
-            if (role1 !== 'Administrator' || role1 !== 'Editor') {
+            if (role1 !== 'Administrator' && role1 !== 'Editor') {
             document.getElementById('nut2').style.display = 'none';
             document.getElementById('nut3').style.display = 'none';
             document.getElementById('nut4').style.display = 'none';

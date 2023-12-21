@@ -179,7 +179,6 @@ include "header.php";
 <script>
   tinymce.init({
     selector: 'textarea',
-    plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
     tinycomments_mode: 'embedded',
     tinycomments_author: 'Author name',
@@ -302,30 +301,10 @@ include "header.php";
             imageInput.value = fileName;
             console.log('File đã được chọn: ' + fileName);
         }
-        function uploadImage(event) {
-            event.preventDefault();
 
-            var fileInput = document.getElementById('user_image');
-            var file = fileInput.files[0];
-
-            var formData = new FormData();
-            formData.append('user_image', file);
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'upload.php', true);
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Xử lý phản hồi từ máy chủ nếu cần
-                    console.log(xhr.responseText);
-                }
-            };
-
-            xhr.send(formData);
-        }
     </script>
     <?php
-    include 'index_footer.php';
+    include 'footer.php';
     ?>
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

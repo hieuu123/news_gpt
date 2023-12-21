@@ -242,12 +242,12 @@ include "header.php";
                   <tr>
                     <th>Post ID</th>
                     <th>Title</th>
+                    <th>Author</th>
                     <th>Category</th>
                     <th>Group Categories</th>
                     <th>Edit & Delete</th>
                   </tr>';
-              $query = "SELECT * FROM posts
-                  JOIN categories ON posts.category_id = categories.category_id;";
+              $query = "SELECT * FROM posts JOIN categories ON posts.category_id = categories.category_id JOIN users on posts.user_id = users.user_id;";
                 $result = $conn->query($query);
                 $rows = $result->num_rows;
                 $ckct = 1;
@@ -256,6 +256,7 @@ include "header.php";
                 $row = $result->fetch_assoc();
                 $post_id = $row['post_id'];
                 $title = $row['title'];
+                $author = $row['username'];
                 $category_name = $row['category_name'];
                 $created_at = $row['created_at'];
                 echo '<form action="post_edit.php" method="post" id="post">';
@@ -263,6 +264,7 @@ include "header.php";
                 <tr>
                     <td><input type="text" name="post_id" value="' . $post_id . '" readonly></td>
                     <td><input type="text" name="title" value="' . $title . '"></td>
+                    <td><input type="text" name="author" value="' . $author . '"></td>
                     <td><input type="text" name="category_name" value="' . $category_name . '"></td>
                     <td><input type="text" name="created_at" value="' . $created_at . '"></td>
                     <input type="hidden" name="roles" value="'.$role_get.'">
@@ -274,6 +276,9 @@ include "header.php";
                     <a id="update" href="post_del_process.php?post_id=' . $post_id . '&roles=' . $role_get . 
                     '&username=' . $username_get . '&password=' . $password_get . '">
                         <button type="button" class="mybtn" style="margin-left:10px;">Xóa</button>
+                    </a>
+                    <a href="detail_M.php?post_id="' . $post_id . '">
+                    <button type="button" class="mybtn" style="margin-left:10px;">Xem</button>
                     </a>
                     </form>
                 </td>';

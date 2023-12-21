@@ -333,7 +333,6 @@ session_start(); ?>
         <!-- About US End -->
     </main>
     <?php
-    // Chờ 15 giây
     echo "<br>";
     include_once("connectSql.php");
     if (isset($_GET["post_id"])) {

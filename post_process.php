@@ -119,12 +119,12 @@
                       echo 'Đăng bài viết lên cơ sở dữ liệu thành công.';
                       ob_flush(); // Xóa bộ nhớ đệm
                       flush(); // Đẩy dữ liệu đến trình duyệt ngay lập tức
-                      sleep(3);
+                      sleep(1);
                       echo '<script>
                       setTimeout(function() {
-                        window.location.href = document.referrer;
-                      }, 0); // Chuyển hướng sau 5 giây (5000 milliseconds)
-                    </script';
+                      window.history.back();
+                      }, 0); // Chuyển hướng sau 5 giây
+                      </script>';
                   }
               }
 ?>

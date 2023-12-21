@@ -96,7 +96,8 @@
             <h2>Lịch sử xem của người dùng</h2>
             <?php
             if (isset($_SESSION['username'])) {
-                $query = "SELECT username, history.time_view, title, content, history.post_id FROM `history` INNER join `posts` on history.post_id = posts.post_id INNER JOIN `users` on history.user_id = users.user_id;";
+                $username = $_SESSION['username'];
+                $query = "SELECT username, history.time_view, title, content, history.post_id FROM `history` INNER join `posts` on history.post_id = posts.post_id INNER JOIN `users` on history.user_id = users.user_id where username = '$username';";
                 $conn = new mysqli("localhost", "root", "", "cmsweb");
                 if ($conn->connect_error) die($conn->connect_error);
                 echo '<table class="table">
@@ -108,8 +109,8 @@
                   </tr>
                 </thead>
                 <tbody>';
-                        $result = $conn->query($query);
-                        $rows = $result->num_rows;
+                if ($result = $conn->query($query)) {
+                    $rows = $result->num_rows;
                         for ($j = 0; $j < $rows; ++$j) {
                             $variable = $result->data_seek($j);
                             $row = $result->fetch_assoc();
@@ -127,8 +128,8 @@
                             echo '';
                         }
                         echo '</tbody></table>';
+                }               
             }
-            
             ?>
         </div>
 
