@@ -84,6 +84,10 @@ session_start(); ?>
         .buttonfavourite:hover {
             background-color: palevioletred;
         }
+        #cmt{
+            color: black;
+            font-size: small;
+        }
     </style>
 </head>
 
@@ -218,7 +222,7 @@ session_start(); ?>
                                                 if (isset($_GET['post_id'])) {
                                                     $postId = $_GET['post_id'];
                                                     // Lấy post_id từ URL hoặc bất cứ cách nào phù hợp
-                                                    $commentQuery = "SELECT users.user_id, users.username, comments.created_at, comments.content, posts.post_id
+                                                    $commentQuery = "SELECT users.user_id, users.username, comments.created_at, comments.content, posts.post_id, comments.comment_id
                                                 FROM comments
                                                 INNER JOIN users ON comments.user_id = users.user_id
                                                 INNER JOIN posts ON comments.post_id = posts.post_id
@@ -243,7 +247,8 @@ session_start(); ?>
                                                     </div>
                                                     <div class='action d-flex justify-content-between mt-2 align-items-center'>
                                                         <div class='reply px-4'>
-                                                            <small>Remove</small>
+                                                            
+                                                            <a id='cmt' href='s_comment_del.php?comment_id={$comment['comment_id']}'>Remove</a>
                                                             <span class='dots'></span>
                                                             <small>Reply</small>
                                                             <span class='dots'></span>

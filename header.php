@@ -195,9 +195,9 @@ if (session_status() == PHP_SESSION_NONE) {
                                             <a id="loginBtn">Đăng Nhập</a>
                                             <ul class="dropdown-menu1">
                                                 <li id="account"><a href="#">Chỉnh sửa thông tin</a></li>
-                                                <li><a href="add_edit_categories.php" id="nut7">Quản lý danh mục</a></li>
                                                 <li><a href="history.php">Lịch sử xem</a></li>
                                                 <br>
+                                                <li><a href="favourite.php">Danh sách yêu thích</a></li>
                                                 <li id="logout" onclick="logout()"><a href="#">Đăng xuất</a></li>
                                             </ul>
                                         </li>
@@ -625,6 +625,7 @@ if (session_status() == PHP_SESSION_NONE) {
             document.getElementById('nut3').style.display = 'none';
             document.getElementById('nut4').style.display = 'none';
             document.getElementById('nut5').style.display = 'none';
+            document.getElementById('nut7').style.display = 'none';
             }
         }
         else
